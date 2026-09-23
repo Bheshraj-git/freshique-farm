@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, ImageOff } from "lucide-react";
+import { ImageOff } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 import FavoriteButton from "@/components/favorites/FavoriteButton";
-import { cn, formatINR } from "@/lib/utils";
+import AddToCartInline from "@/components/cart/AddToCartInline";
+import { formatINR } from "@/lib/utils";
 import type { ProductCard as ProductCardType } from "@/lib/queries/products";
 
 interface Props {
@@ -17,7 +18,6 @@ export default function ProductCard({
 }: Props) {
   return (
     <div className="group relative rounded-2xl bg-white border border-brand-50 shadow-card hover:shadow-float hover:-translate-y-0.5 transition-all duration-200 overflow-hidden">
-      {/* Heart — client widget with optimistic state */}
       <FavoriteButton
         productId={product.id}
         initialFavorited={initialFavorited}
@@ -65,17 +65,17 @@ export default function ProductCard({
             <p className="text-xs text-ink-500 truncate">per {product.unit}</p>
           </div>
 
-          <button
-            type="button"
-            aria-label={`Add ${product.name} to cart`}
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-3.5 py-2 text-xs font-bold text-white",
-              "shadow-card hover:bg-brand-700 active:scale-95 transition"
-            )}
-          >
-            <ShoppingCart className="h-3.5 w-3.5" />
-            Add
-          </button>
+          <AddToCartInline
+            productId={product.id}
+            productName={product.name}
+            productPrice={product.price}
+            productUnit={product.unit}
+            productImage={product.primary_image}
+            productCity={product.city}
+            productSlug={product.slug}
+            productStock={99}
+            farmerName={null}
+          />
         </div>
       </div>
     </div>

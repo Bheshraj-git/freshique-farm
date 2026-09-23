@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Logo from "./Logo";
 import UserMenu from "./UserMenu";
+import CartBadge from "@/components/cart/CartBadge";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -57,13 +58,16 @@ export default function Navbar() {
               key={href}
               href={href}
               className={cn(
-                "flex flex-col items-center text-[11px] font-semibold transition",
+                "relative flex flex-col items-center text-[11px] font-semibold transition",
                 isActive(href)
                   ? "text-brand-700"
                   : "text-ink-700 hover:text-brand-700"
               )}
             >
-              <Icon className="h-5 w-5 mb-0.5" strokeWidth={2} />
+              <div className="relative">
+                <Icon className="h-5 w-5 mb-0.5" strokeWidth={2} />
+                {href === "/cart" && <CartBadge />}
+              </div>
               {label}
             </Link>
           ))}

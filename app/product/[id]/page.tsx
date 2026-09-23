@@ -73,7 +73,7 @@ export default async function ProductPage({ params }: PageProps) {
             farmerName={product.farmer_name}
             farmerAvatar={product.farmer_avatar}
           />
-          <AddToCartButton productId={product.id} disabled={outOfStock} />
+          <AddToCartButton product={product} />
         </div>
       </div>
 

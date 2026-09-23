@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, ShoppingBasket, ShoppingCart, User } from "lucide-react";
+import CartBadge from "@/components/cart/CartBadge";
 import { cn } from "@/lib/utils";
 
 const tabs = [
@@ -14,7 +15,6 @@ const tabs = [
 
 export default function MobileTabBar() {
   const pathname = usePathname();
-
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
@@ -37,7 +37,10 @@ export default function MobileTabBar() {
                     : "text-ink-700 hover:text-brand-700"
                 )}
               >
-                <Icon className="h-5 w-5" strokeWidth={2} />
+                <span className="relative">
+                  <Icon className="h-5 w-5" strokeWidth={2} />
+                  {href === "/cart" && <CartBadge />}
+                </span>
                 {label}
               </Link>
             </li>
