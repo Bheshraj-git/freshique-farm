@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 import { createServerClient } from "@supabase/ssr";
 
-const PROTECTED_PREFIXES = ["/cart", "/orders", "/favorites", "/profile"];
+const PROTECTED_PREFIXES = ["/cart", "/orders", "/favorites", "/profile", "/place-order", "/checkout"];
 const FARMER_PREFIXES = ["/farmer"];
 
 export async function middleware(request: NextRequest) {

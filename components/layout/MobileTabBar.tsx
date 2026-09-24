@@ -4,19 +4,25 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, ShoppingBasket, ShoppingCart, User } from "lucide-react";
 import CartBadge from "@/components/cart/CartBadge";
+import { useUser } from "@/lib/hooks/useUser";
 import { cn } from "@/lib/utils";
-
-const tabs = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/market", label: "Market", icon: ShoppingBasket },
-  { href: "/cart", label: "Cart", icon: ShoppingCart },
-  { href: "/login", label: "Login", icon: User },
-];
 
 export default function MobileTabBar() {
   const pathname = usePathname();
+  const { user } = useUser();
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const tabs = [
+    { href: "/", label: "Home", icon: Home },
+    { href: "/market", label: "Market", icon: ShoppingBasket },
+    { href: "/cart", label: "Cart", icon: ShoppingCart },
+    {
+      href: user ? "/profile" : "/login",
+      label: user ? "Profile" : "Login",
+      icon: User,
+    },
+  ];
 
   return (
     <nav

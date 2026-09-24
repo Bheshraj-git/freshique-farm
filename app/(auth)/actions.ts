@@ -145,11 +145,10 @@ export async function signUpAction(
 }
 
 /**
- * Sign out — clears session, returns success.
+ * Sign out — clears session, returns void.
  */
-export async function signOutAction(): Promise<{ ok: boolean }> {
+export async function signOutAction(): Promise<void> {
   const supabase = await createClient();
   await supabase.auth.signOut();
   revalidatePath("/", "layout");
-  return { ok: true };
 }

@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function CartSummary({ subtotal, itemCount }: Props) {
-  const delivery = 0;
+  const delivery: number = 30;
   const total = subtotal + delivery;
 
   return (
@@ -44,7 +44,7 @@ export default function CartSummary({ subtotal, itemCount }: Props) {
         </div>
       </div>
 
-      <Link href="/checkout" className="block mt-6">
+      <Link href="/place-order" className="block mt-6">
         <Button size="lg" className="w-full">
           Proceed to Checkout
         </Button>

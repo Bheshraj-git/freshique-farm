@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
@@ -15,44 +16,69 @@ export function useUser() {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<ClientProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
 
-  useEffect(() => {
+  const loadProfile = useCallback(async (userId: string) => {
     const supabase = createClient();
-    let mounted = true;
+    const { data } = await supabase
+      .from("profiles")
+      .select("id, role, full_name, avatar_url")
+      .eq("id", userId)
+      .maybeSingle();
+    return data as ClientProfile | null;
+  }, []);
 
-    async function loadProfile(userId: string) {
-      const { data } = await supabase
-        .from("profiles")
-        .select("id, role, full_name, avatar_url")
-        .eq("id", userId)
-        .maybeSingle();
-      if (mounted) setProfile(data as ClientProfile | null);
-    }
+  const refreshUser = useCallback(async () => {
+    const supabase = createClient();
+    try {
+      const {
+        data: { user: currentUser },
+      } = await supabase.auth.getUser();
 
-    // Initial session
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!mounted) return;
-      setUser(user);
-      if (user) loadProfile(user.id);
-      setLoading(false);
-    });
-
-    // Subscribe to auth changes
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!mounted) return;
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadProfile(session.user.id);
+      setUser(currentUser);
+      if (currentUser) {
+        const prof = await loadProfile(currentUser.id);
+        setProfile(prof);
       } else {
         setProfile(null);
       }
-    });
+    } catch {
+      setUser(null);
+      setProfile(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [loadProfile]);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    refreshUser();
+
+    // Subscribe to auth changes
+    const { data: sub } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        const currentUser = session?.user ?? null;
+        setUser(currentUser);
+        if (currentUser) {
+          const prof = await loadProfile(currentUser.id);
+          setProfile(prof);
+        } else {
+          setProfile(null);
+        }
+        setLoading(false);
+      }
+    );
 
     return () => {
-      mounted = false;
       sub.subscription.unsubscribe();
     };
-  }, []);
+  }, [loadProfile, refreshUser]);
 
-  return { user, profile, loading };
+  // Re-check auth whenever pathname changes (e.g. navigation across routes)
+  useEffect(() => {
+    refreshUser();
+  }, [pathname, refreshUser]);
+
+  return { user, profile, loading, refreshUser };
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Mail, Lock, LogIn } from "lucide-react";
 import Link from "next/link";
 import { signInAction, type ActionState } from "@/app/(auth)/actions";
@@ -12,7 +11,6 @@ import { cn } from "@/lib/utils";
 const initialState: ActionState = { ok: false };
 
 export default function LoginForm() {
-  const router = useRouter();
   const [state, formAction, isPending] = useActionState(
     signInAction,
     initialState
@@ -21,10 +19,11 @@ export default function LoginForm() {
   // Navigate on success
   useEffect(() => {
     if (state.ok) {
-      router.push("/");
-      router.refresh(); // re-render server components with new session
+      const searchParams = new URLSearchParams(window.location.search);
+      const next = searchParams.get("next") || "/";
+      window.location.href = next;
     }
-  }, [state.ok, router]);
+  }, [state.ok]);
 
   return (
     <div className="rounded-3xl bg-white p-8 shadow-float border border-brand-50">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   User as UserIcon,
@@ -22,15 +21,15 @@ import AvatarUpload from "./AvatarUpload";
 const initialState: ActionState = { ok: false };
 
 export default function SignupForm() {
-  const router = useRouter();
-const [state, formAction, isPending] = useActionState(signUpAction, initialState);
+  const [state, formAction, isPending] = useActionState(signUpAction, initialState);
 
-useEffect(() => {
-  if (state.ok) {
-    router.push("/");
-    router.refresh();
-  }
-}, [state.ok, router]);
+  useEffect(() => {
+    if (state.ok) {
+      const searchParams = new URLSearchParams(window.location.search);
+      const next = searchParams.get("next") || "/";
+      window.location.href = next;
+    }
+  }, [state.ok]);
   
 
   return (
