@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import MobileTabBar from "@/components/layout/MobileTabBar";
-import Toaster from "@/components/ui/Toaster";
 import { ToastProvider } from "@/lib/toast";
+import Toaster from "@/components/ui/Toaster";
 import CartHydrator from "@/components/cart/CartHydrator";
 import { getCartLines } from "@/lib/queries/cart";
 
@@ -27,21 +24,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Load the server cart once per request. Hydrates the Zustand store
-  // and keeps the navbar badge correct.
   const cartLines = await getCartLines();
 
   return (
     <html lang="en" className={quicksand.variable}>
-      <body className="min-h-screen flex flex-col font-sans">
+      <body className="min-h-screen font-sans">
         <ToastProvider>
           <CartHydrator initialItems={cartLines} />
-          <Navbar />
-          <main className="flex-1 pt-28 md:pt-32 pb-24 md:pb-0">
-            {children}
-          </main>
-          <Footer />
-          <MobileTabBar />
+          {children}
           <Toaster />
         </ToastProvider>
       </body>
