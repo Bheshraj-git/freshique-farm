@@ -93,19 +93,33 @@ export default function UserMenu() {
           <nav className="py-2">
             <MenuItem href="/orders" icon={Package} label="My Orders" onClick={() => setOpen(false)} />
             <MenuItem href="/favorites" icon={Heart} label="Favorites" onClick={() => setOpen(false)} />
-            <MenuItem href="/profile" icon={UserIcon} label="Profile" onClick={() => setOpen(false)} />
+            {profile?.role === "farmer" ? (
+              <MenuItem
+                href="/farmer/dashboard/profile"
+                icon={UserIcon}
+                label="Farmer Dashboard"
+                onClick={() => setOpen(false)}
+              />
+            ) : (
+              <MenuItem
+                href="/profile"
+                icon={UserIcon}
+                label="Profile"
+                onClick={() => setOpen(false)}
+              />
+            )}
           </nav>
 
           <button
-             type="button"
-             onClick={async () => {
-             await signOutAction();
-             window.location.href = "/";
-              }}
-             className="w-full flex items-center gap-2 px-4 py-3 text-sm font-semibold text-danger-600 hover:bg-danger-500/5 transition border-t border-brand-50"
-            >
-             <LogOut className="h-4 w-4" />
-             Logout
+            type="button"
+            onClick={async () => {
+              await signOutAction();
+              window.location.href = "/";
+            }}
+            className="w-full flex items-center gap-2 px-4 py-3 text-sm font-semibold text-danger-600 hover:bg-danger-500/5 transition border-t border-brand-50"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
           </button>
         </div>
       )}

@@ -11,22 +11,29 @@ import {
 import Logo from "./Logo";
 import UserMenu from "./UserMenu";
 import CartBadge from "@/components/cart/CartBadge";
+import { useUser } from "@/lib/hooks/useUser";
 import { cn } from "@/lib/utils";
-
-const links = [
-  { href: "/community", label: "Community", icon: MessageCircle },
-  { href: "/orders", label: "My Orders", icon: ClipboardList },
-];
-
-const iconLinks = [
-  { href: "/market", label: "Market", icon: ShoppingBasket },
-  { href: "/cart", label: "Cart", icon: ShoppingCart },
-];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { profile } = useUser();
+
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
+
+  // Role-aware link targets
+  const ordersHref =
+    profile?.role === "farmer" ? "/farmer/dashboard/orders" : "/orders";
+
+  const links = [
+    { href: "/community", label: "Community", icon: MessageCircle },
+    { href: ordersHref, label: "My Orders", icon: ClipboardList },
+  ];
+
+  const iconLinks = [
+    { href: "/market", label: "Market", icon: ShoppingBasket },
+    { href: "/cart", label: "Cart", icon: ShoppingCart },
+  ];
 
   return (
     <header className="hidden md:block fixed top-5 left-0 right-0 z-40 px-6">
@@ -35,7 +42,7 @@ export default function Navbar() {
 
         <ul className="flex items-center gap-8">
           {links.map(({ href, label, icon: Icon }) => (
-            <li key={href}>
+            <li key={label}>
               <Link
                 href={href}
                 className={cn(

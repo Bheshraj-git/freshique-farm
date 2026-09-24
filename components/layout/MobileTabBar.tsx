@@ -9,20 +9,29 @@ import { cn } from "@/lib/utils";
 
 export default function MobileTabBar() {
   const pathname = usePathname();
-  const { user } = useUser();
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const { user, profile } = useUser();
+
+  const accountHref = !user
+    ? "/login"
+    : profile?.role === "farmer"
+      ? "/farmer/dashboard/profile"
+      : "/profile";
+
+  const accountLabel = !user ? "Login" : "Account";
 
   const tabs = [
     { href: "/", label: "Home", icon: Home },
     { href: "/market", label: "Market", icon: ShoppingBasket },
     { href: "/cart", label: "Cart", icon: ShoppingCart },
-    {
-      href: user ? "/profile" : "/login",
-      label: user ? "Profile" : "Login",
-      icon: User,
-    },
+    { href: accountHref, label: accountLabel, icon: User },
   ];
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    // Match farmer profile routes to the "Account" tab
+    if (href.startsWith("/farmer")) return pathname.startsWith("/farmer");
+    return pathname.startsWith(href);
+  };
 
   return (
     <nav
@@ -33,7 +42,7 @@ export default function MobileTabBar() {
         {tabs.map(({ href, label, icon: Icon }) => {
           const active = isActive(href);
           return (
-            <li key={href}>
+            <li key={label}>
               <Link
                 href={href}
                 className={cn(
