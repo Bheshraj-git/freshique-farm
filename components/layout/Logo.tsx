@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
@@ -12,37 +13,20 @@ export default function Logo({ variant = "navbar", className }: LogoProps) {
   return (
     <Link
       href="/"
-      className={cn("flex items-center gap-2 group", className)}
+      className={cn("inline-flex items-center transition-opacity hover:opacity-90", className)}
       aria-label="Freshique Farm home"
     >
-      {/* Circular leaf emblem — placeholder until real asset is provided */}
-      <span
+      <Image
+        src="/logo.png"
+        alt="Freshique Farm"
+        width={isFooter ? 240 : 200}
+        height={isFooter ? 72 : 60}
         className={cn(
-          "relative grid place-items-center rounded-full bg-brand-50 border-2 border-brand-700",
-          isFooter ? "h-12 w-12" : "h-11 w-11"
+          "w-auto object-contain",
+          isFooter ? "h-14 md:h-16" : "h-12 md:h-14"
         )}
-      >
-        <span className="text-brand-700 text-xl font-black leading-none">🌿</span>
-      </span>
-
-      <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "font-extrabold tracking-tight text-brand-800",
-            isFooter ? "text-lg" : "text-base"
-          )}
-        >
-          FRESHIQUE
-        </span>
-        <span
-          className={cn(
-            "font-extrabold tracking-tight text-brand-800",
-            isFooter ? "text-lg" : "text-base"
-          )}
-        >
-          FARM
-        </span>
-      </span>
+        priority
+      />
     </Link>
   );
 }
