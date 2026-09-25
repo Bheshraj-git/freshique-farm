@@ -5,7 +5,7 @@ import { createServerClient } from "@supabase/ssr";
 const PROTECTED_PREFIXES = ["/cart", "/orders", "/favorites", "/profile", "/place-order", "/checkout"];
 const FARMER_PREFIXES = ["/farmer"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // First, refresh the session (may set new cookies)
   const response = await updateSession(request);
 
