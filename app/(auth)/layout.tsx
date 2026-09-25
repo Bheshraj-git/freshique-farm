@@ -9,9 +9,9 @@ export default function AuthLayout({
 }) {
   return (
     <div className="min-h-screen bg-page-gradient">
-      <div className="mx-auto max-w-7xl px-6 pt-6 pb-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-4 sm:pt-6 pb-12">
         {/* Top bar with logo only — no nav links on auth pages */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-6 md:mb-8">
           <Logo />
           <Link
             href="/"

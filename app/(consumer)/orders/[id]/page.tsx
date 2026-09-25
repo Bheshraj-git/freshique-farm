@@ -43,9 +43,9 @@ export default async function OrderDetailPage({ params }: PageProps) {
   const canCancel = order.status === "pending";
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-8">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-4 md:py-8">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-4 md:mb-6">
         <Link
           href="/orders"
           aria-label="Back to orders"
@@ -53,7 +53,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
-        <h1 className="text-2xl md:text-3xl font-extrabold text-ink-900">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-ink-900">
           Order #{order.id.slice(0, 8).toUpperCase()}
         </h1>
       </div>

@@ -23,7 +23,7 @@ export default function Logo({ variant = "navbar", className }: LogoProps) {
         height={isFooter ? 86 : 76}
         className={cn(
           "w-auto object-contain",
-          isFooter ? "h-16 md:h-18" : "h-14 md:h-16"
+          isFooter ? "h-16 md:h-18" : "h-9 md:h-16"
         )}
         priority
       />

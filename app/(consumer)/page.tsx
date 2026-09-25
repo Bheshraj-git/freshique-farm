@@ -62,13 +62,13 @@ export default function Home() {
   return (
     <div className="overflow-x-hidden">
       {/* ============================== HERO ============================== */}
-      <section className="relative mx-auto max-w-7xl px-6 lg:px-8 pt-8 md:pt-12 pb-20 md:pb-28">
+      <section className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-12 pb-16 md:pb-28">
 
-        <div className="relative grid gap-12 lg:grid-cols-12 lg:gap-10 items-center">
+        <div className="relative grid gap-8 lg:grid-cols-12 lg:gap-10 items-center">
           {/* Left column (55% width) */}
           <div className="text-center lg:text-left lg:col-span-7">
-            <FadeIn delay={0.05} y={20}>
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black leading-[1.02] tracking-tight">
+            <FadeIn delay={0.05} y={16}>
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight">
                 <span className="block text-[#1b4d3e]">Harvest</span>
                 <span className="block text-[#ff8a00] font-black drop-shadow-sm">
                   Happiness
@@ -76,8 +76,8 @@ export default function Home() {
               </h1>
             </FadeIn>
 
-            <FadeIn delay={0.15} y={16}>
-              <p className="mt-8 text-lg sm:text-xl md:text-2xl text-[#2d473b] font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <FadeIn delay={0.15} y={14}>
+              <p className="mt-4 sm:mt-6 md:mt-8 text-base sm:text-xl md:text-2xl text-[#2d473b] font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 Experience the taste of{" "}
                 <span className="font-extrabold text-[#1b4d3e]">pure nature</span>
                 . Real-time farm tracking, same-day harvest, and absolutely 100%
@@ -85,11 +85,11 @@ export default function Home() {
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.25} y={16}>
-              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start sm:items-center">
+            <FadeIn delay={0.25} y={14}>
+              <div className="mt-6 sm:mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start sm:items-center">
                 <Button
                   href="/market"
-                  className="!bg-[#00875a] hover:!bg-[#00744e] !text-white !font-black !text-lg !px-8 !py-4 !rounded-2xl !shadow-lg hover:!shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all group flex items-center justify-center gap-2"
+                  className="!bg-[#00875a] hover:!bg-[#00744e] !text-white !font-black !text-base sm:!text-lg !px-6 sm:!px-8 !py-3.5 sm:!py-4 !rounded-2xl !shadow-lg hover:!shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all group flex items-center justify-center gap-2"
                 >
                   <span>Start Shopping</span>
                   <ChevronRight className="h-5 w-5 stroke-[3] transition-transform group-hover:translate-x-1" />
@@ -97,21 +97,21 @@ export default function Home() {
                 <Button
                   href="/signup"
                   variant="secondary"
-                  className="!bg-white hover:!bg-[#f4fbf7] !text-[#1b4d3e] !font-bold !text-lg !px-8 !py-4 !rounded-2xl !border-2 !border-[#c1e8d4] !shadow-md hover:!shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all flex items-center justify-center"
+                  className="!bg-white hover:!bg-[#f4fbf7] !text-[#1b4d3e] !font-bold !text-base sm:!text-lg !px-6 sm:!px-8 !py-3.5 sm:!py-4 !rounded-2xl !border-2 !border-[#c1e8d4] !shadow-md hover:!shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all flex items-center justify-center"
                 >
                   Become a Farmer
                 </Button>
               </div>
             </FadeIn>
 
-            <FadeIn delay={0.35} y={16}>
-              <div className="mt-10 flex flex-wrap gap-3 justify-center lg:justify-start">
+            <FadeIn delay={0.35} y={14}>
+              <div className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start">
                 {heroFeatures.map(({ icon: Icon, label }) => (
                   <span
                     key={label}
-                    className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-[#c1e8d4] px-4 py-2 text-sm font-extrabold text-[#185038] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full bg-white/90 backdrop-blur-md border border-[#c1e8d4] px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-extrabold text-[#185038] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default"
                   >
-                    <Icon className="h-4 w-4 text-[#00875a] stroke-[3]" />
+                    <Icon className="h-3.5 sm:h-4 w-3.5 sm:w-4 text-[#00875a] stroke-[3]" />
                     {label}
                   </span>
                 ))}

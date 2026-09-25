@@ -16,9 +16,9 @@ export default async function FavoritesPage() {
   const favorites = await getFavoriteProducts();
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 md:py-8">
       {/* Header */}
-      <div className="flex items-center justify-between gap-4 mb-8">
+      <div className="flex items-center justify-between gap-4 mb-4 md:mb-8">
         <div className="flex items-center gap-3">
           <Link
             href="/profile"
@@ -33,7 +33,7 @@ export default async function FavoritesPage() {
               fill="currentColor"
               strokeWidth={0}
             />
-            <h1 className="text-2xl md:text-3xl font-extrabold text-ink-900">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-ink-900">
               Your Favorites
             </h1>
           </div>

@@ -17,8 +17,8 @@ export default async function PlaceOrderPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
-      <h1 className="text-4xl font-extrabold text-center text-ink-900 mb-10">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 md:py-8">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center text-ink-900 mb-6 md:mb-10">
         Checkout
       </h1>
 

@@ -15,11 +15,11 @@ export default async function CommunityPage() {
     const { posts } = await listPosts({ limit: 10 });
 
     return (
-        <div className="mx-auto max-w-2xl px-6 py-6">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 py-4 md:py-8">
             {/* Header */}
             <FadeIn>
-                <div className="mb-6">
-                    <h1 className="text-3xl md:text-4xl font-extrabold text-ink-900">
+                <div className="mb-4 md:mb-6">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-ink-900">
                         Community
                     </h1>
                     <p className="mt-1 text-sm text-ink-500">
