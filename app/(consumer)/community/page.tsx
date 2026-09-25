@@ -1,32 +1,49 @@
-import Link from "next/link";
-import { MessageCircle, ArrowRight } from "lucide-react";
-import Button from "@/components/ui/Button";
+import { getCurrentUser } from "@/lib/auth";
+import { listPosts } from "@/lib/queries/community";
+import PostComposer from "@/components/community/PostComposer";
+import PostCard from "@/components/community/PostCard";
+import EmptyFeed from "@/components/community/EmptyFeed";
 
 export const metadata = {
     title: "Community — Freshique Farm",
+    description: "Share recipes, tips, and stories with the Freshique community",
 };
 
-export default function CommunityPage() {
+export default async function CommunityPage() {
+    const user = await getCurrentUser();
+    const { posts } = await listPosts({ limit: 10 });
+
     return (
-        <div className="mx-auto max-w-3xl px-6 py-16 text-center">
-            <div className="mx-auto grid place-items-center h-20 w-20 rounded-2xl bg-brand-100 text-brand-700 mb-6">
-                <MessageCircle className="h-10 w-10" strokeWidth={1.5} />
+        <div className="mx-auto max-w-2xl px-6 py-6">
+            {/* Header */}
+            <div className="mb-6">
+                <h1 className="text-3xl md:text-4xl font-extrabold text-ink-900">
+                    Community
+                </h1>
+                <p className="mt-1 text-sm text-ink-500">
+                    Recipes, tips, and stories from Freshique members
+                </p>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-extrabold text-ink-900 mb-3">
-                Community
-            </h1>
-            <p className="text-ink-500 max-w-lg mx-auto mb-8">
-                Share recipes, farming tips, and connect with other Freshique members.
-                This space is coming in a future phase.
-            </p>
+            {/* Composer */}
+            <div className="mb-6">
+                <PostComposer />
+            </div>
 
-            <Link href="/market">
-                <Button>
-                    Browse Market
-                    <ArrowRight className="h-4 w-4" />
-                </Button>
-            </Link>
+            {/* Feed */}
+            {posts.length === 0 ? (
+                <EmptyFeed />
+            ) : (
+                <div className="space-y-5">
+                    {posts.map((post) => (
+                        <PostCard
+                            key={post.id}
+                            post={post}
+                            viewerId={user?.id ?? null}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
