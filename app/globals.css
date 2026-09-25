@@ -1,12 +1,9 @@
 @import "tailwindcss";
 
-/* ============================================================
-   DESIGN TOKENS — extracted from https://freshiquefarm.vercel.app/
-   Values are in OKLCH to match the reference exactly.
-   ============================================================ */
+
 @theme {
   /* Brand greens */
-  --color-brand-50:  oklch(0.973 0.071 103.193);
+  --color-brand-50: oklch(0.973 0.071 103.193);
   --color-brand-100: oklch(0.955 0.059 159.500);
   --color-brand-200: oklch(0.925 0.084 155.995);
   --color-brand-300: oklch(0.880 0.108 163.500);
@@ -18,7 +15,7 @@
   --color-brand-900: oklch(0.380 0.080 167.500);
 
   /* Orange accent */
-  --color-accent-50:  oklch(0.977 0.040 84.500);
+  --color-accent-50: oklch(0.977 0.040 84.500);
   --color-accent-100: oklch(0.955 0.070 84.500);
   --color-accent-200: oklch(0.920 0.110 76.500);
   --color-accent-300: oklch(0.870 0.160 70.500);
@@ -33,7 +30,7 @@
 
   /* Surfaces */
   --color-surface-cream: oklch(0.973 0.071 103.193);
-  --color-surface-mint:  oklch(0.979 0.021 166.113);
+  --color-surface-mint: oklch(0.979 0.021 166.113);
 
   /* Ink */
   --color-ink-900: oklch(0.210 0.030 260.000);
@@ -50,16 +47,17 @@
   --radius-4xl: 2rem;
 
   /* Shadows */
-  --shadow-nav:   0 8px 24px -8px oklch(0.432 0.095 166.913 / 0.15);
-  --shadow-card:  0 4px 12px -4px oklch(0.432 0.095 166.913 / 0.08);
+  --shadow-nav: 0 8px 24px -8px oklch(0.432 0.095 166.913 / 0.15);
+  --shadow-card: 0 4px 12px -4px oklch(0.432 0.095 166.913 / 0.08);
   --shadow-float: 0 12px 32px -8px oklch(0.432 0.095 166.913 / 0.18);
-  --shadow-soft:  0 2px 8px -2px oklch(0.432 0.095 166.913 / 0.06);
+  --shadow-soft: 0 2px 8px -2px oklch(0.432 0.095 166.913 / 0.06);
 }
 
 /* ============================================================
    BASE
    ============================================================ */
 @layer base {
+
   html,
   body {
     background-color: oklch(0.979 0.021 166.113);
@@ -70,16 +68,19 @@
   }
 
   body {
-    background-image: linear-gradient(
-      135deg,
-      oklch(0.973 0.071 103.193) 0%,
-      oklch(0.979 0.021 166.113) 50%,
-      oklch(0.925 0.084 155.995) 100%
-    );
+    background-image: linear-gradient(135deg,
+        oklch(0.973 0.071 103.193) 0%,
+        oklch(0.979 0.021 166.113) 50%,
+        oklch(0.925 0.084 155.995) 100%);
     background-attachment: fixed;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 700;
     color: oklch(0.210 0.030 260.000);
     letter-spacing: -0.01em;
@@ -98,28 +99,31 @@
    BACKGROUND UTILITIES
    ============================================================ */
 @utility bg-page-gradient {
-  background-image: linear-gradient(
-    135deg,
-    oklch(0.973 0.071 103.193) 0%,
-    oklch(0.979 0.021 166.113) 50%,
-    oklch(0.925 0.084 155.995) 100%
-  );
+  background-image: linear-gradient(135deg,
+      oklch(0.973 0.071 103.193) 0%,
+      oklch(0.979 0.021 166.113) 50%,
+      oklch(0.925 0.084 155.995) 100%);
 }
 
 @utility bg-footer-gradient {
-  background-image: linear-gradient(
-    135deg,
-    oklch(0.979 0.021 166.113) 0%,
-    oklch(0.973 0.071 103.193) 100%
-  );
+  background-image: linear-gradient(135deg,
+      oklch(0.979 0.021 166.113) 0%,
+      oklch(0.973 0.071 103.193) 100%);
 }
 
 /* ============================================================
    ANIMATIONS
    ============================================================ */
 @keyframes toast-in {
-  from { opacity: 0; transform: translateX(16px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @utility animate-toast-in {
