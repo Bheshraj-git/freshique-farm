@@ -12,6 +12,8 @@ import {
     ClipboardList,
     Leaf,
     LogOut,
+    ArrowLeft,
+    Store,
 } from "lucide-react";
 import { signOutAction } from "@/app/(auth)/actions";
 import { cn } from "@/lib/utils";
@@ -52,17 +54,31 @@ export default function FarmerSidebar({
 
     return (
         <aside className="hidden lg:flex flex-col w-72 shrink-0 bg-brand-800 text-white">
-            {/* Logo */}
-            <div className="px-6 pt-6 pb-4 flex items-center gap-3">
-                <span className="grid place-items-center h-10 w-10 rounded-xl bg-brand-500 text-white shrink-0">
-                    <Leaf className="h-5 w-5" />
-                </span>
-                <div className="leading-tight">
-                    <p className="text-base font-extrabold">Freshique</p>
-                    <p className="text-[11px] text-brand-200 font-medium tracking-wide">
-                        Farmer Portal
-                    </p>
+            {/* Header with Back to Home */}
+            <div className="px-6 pt-6 pb-4">
+                <div className="flex items-center gap-3">
+                    <span className="grid place-items-center h-10 w-10 rounded-xl bg-brand-500 text-white shrink-0">
+                        <Leaf className="h-5 w-5" />
+                    </span>
+                    <div className="leading-tight">
+                        <p className="text-base font-extrabold">Freshique</p>
+                        <p className="text-[11px] text-brand-200 font-medium tracking-wide">
+                            Farmer Portal
+                        </p>
+                    </div>
                 </div>
+
+                {/* Back to Home / Store button */}
+                <Link
+                    href="/"
+                    className="mt-4 flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-brand-700/50 hover:bg-brand-600 text-xs font-semibold text-brand-100 hover:text-white border border-brand-600/40 transition group"
+                >
+                    <span className="inline-flex items-center gap-2">
+                        <ArrowLeft className="h-3.5 w-3.5 text-brand-300 transition-transform group-hover:-translate-x-0.5" />
+                        <span>Back to Home</span>
+                    </span>
+                    <Store className="h-3.5 w-3.5 text-brand-300" />
+                </Link>
             </div>
 
             {/* User card */}
