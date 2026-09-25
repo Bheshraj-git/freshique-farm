@@ -5,6 +5,7 @@ import ProductCard from "@/components/market/ProductCard";
 import EmptyProducts from "@/components/market/EmptyProducts";
 import MarketFilters from "@/components/market/MarketFilters";
 import MarketFiltersMobile from "@/components/market/MarketFiltersMobile";
+import FadeIn from "@/components/ui/FadeIn";
 
 export const metadata = {
   title: "Market — Freshique Farm",
@@ -54,12 +55,13 @@ export default async function MarketPage({ searchParams }: PageProps) {
         <EmptyProducts />
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
-          {products.map((p) => (
-            <ProductCard
-              key={p.id}
-              product={p}
-              initialFavorited={favoritedIds.has(p.id)}
-            />
+          {products.map((p, idx) => (
+            <FadeIn key={p.id} delay={Math.min(idx * 0.05, 0.4)} y={20}>
+              <ProductCard
+                product={p}
+                initialFavorited={favoritedIds.has(p.id)}
+              />
+            </FadeIn>
           ))}
         </div>
       )}

@@ -31,10 +31,10 @@ export default function UserMenu() {
     return (
       <Link
         href="/login"
-        className="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-2 text-sm font-semibold text-white shadow-card hover:bg-brand-700 transition"
+        className="inline-flex items-center gap-2 rounded-full bg-[#4ee1a0] hover:bg-[#3cd290] px-6 py-2.5 text-base font-extrabold text-white shadow-sm transition hover:shadow-md active:scale-95"
       >
-        <UserIcon className="h-4 w-4" />
-        Login
+        <UserIcon className="h-5 w-5 stroke-[2.5]" />
+        <span>Login</span>
       </Link>
     );
   }

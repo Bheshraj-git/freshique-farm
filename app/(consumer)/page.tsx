@@ -62,60 +62,56 @@ export default function Home() {
   return (
     <div className="overflow-x-hidden">
       {/* ============================== HERO ============================== */}
-      <section className="relative mx-auto max-w-7xl px-6 pt-4 md:pt-10 pb-16 md:pb-24">
-        {/* Decorative radial sun */}
-        <div
-  aria-hidden="true"
-  className="pointer-events-none absolute top-0 right-0 lg:right-10 h-[400px] w-[400px] md:h-[500px] md:w-[500px] rounded-full opacity-70 blur-3xl"
-  style={{
-    background:
-      "radial-gradient(circle, oklch(0.88 0.15 85) 0%, oklch(0.88 0.15 85 / 0.4) 40%, transparent 70%)",
-  }}
-/>
+      <section className="relative mx-auto max-w-7xl px-6 lg:px-8 pt-8 md:pt-12 pb-20 md:pb-28">
 
-        <div className="relative grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Left column */}
-          <div className="text-center lg:text-left">
-            <FadeIn>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight">
-                <span className="block text-brand-800">Harvest</span>
-                <span
-  className="block bg-gradient-to-r from-accent-400 to-accent-600 bg-clip-text text-transparent"
->
-  Happiness
-</span>
+        <div className="relative grid gap-12 lg:grid-cols-12 lg:gap-10 items-center">
+          {/* Left column (55% width) */}
+          <div className="text-center lg:text-left lg:col-span-7">
+            <FadeIn delay={0.05} y={20}>
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black leading-[1.02] tracking-tight">
+                <span className="block text-[#1b4d3e]">Harvest</span>
+                <span className="block text-[#ff8a00] font-black drop-shadow-sm">
+                  Happiness
+                </span>
               </h1>
             </FadeIn>
 
-            <FadeIn delay={0.1}>
-              <p className="mt-6 text-base md:text-lg text-ink-700 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+            <FadeIn delay={0.15} y={16}>
+              <p className="mt-8 text-lg sm:text-xl md:text-2xl text-[#2d473b] font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 Experience the taste of{" "}
-                <span className="font-semibold text-brand-800">pure nature</span>
+                <span className="font-extrabold text-[#1b4d3e]">pure nature</span>
                 . Real-time farm tracking, same-day harvest, and absolutely 100%
                 chemical-free.
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.2}>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start sm:items-stretch">
-                <Button href="/market" size="lg" className="group">
-                  Start Shopping
-                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            <FadeIn delay={0.25} y={16}>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start sm:items-center">
+                <Button
+                  href="/market"
+                  className="!bg-[#00875a] hover:!bg-[#00744e] !text-white !font-black !text-lg !px-8 !py-4 !rounded-2xl !shadow-lg hover:!shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all group flex items-center justify-center gap-2"
+                >
+                  <span>Start Shopping</span>
+                  <ChevronRight className="h-5 w-5 stroke-[3] transition-transform group-hover:translate-x-1" />
                 </Button>
-                <Button href="/signup" variant="secondary" size="lg">
+                <Button
+                  href="/signup"
+                  variant="secondary"
+                  className="!bg-white hover:!bg-[#f4fbf7] !text-[#1b4d3e] !font-bold !text-lg !px-8 !py-4 !rounded-2xl !border-2 !border-[#c1e8d4] !shadow-md hover:!shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all flex items-center justify-center"
+                >
                   Become a Farmer
                 </Button>
               </div>
             </FadeIn>
 
-            <FadeIn delay={0.3}>
-              <div className="mt-8 flex flex-wrap gap-2 justify-center lg:justify-start">
+            <FadeIn delay={0.35} y={16}>
+              <div className="mt-10 flex flex-wrap gap-3 justify-center lg:justify-start">
                 {heroFeatures.map(({ icon: Icon, label }) => (
                   <span
                     key={label}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-white/70 backdrop-blur-sm border border-brand-100 px-3.5 py-1.5 text-xs font-semibold text-brand-800 shadow-soft"
+                    className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-[#c1e8d4] px-4 py-2 text-sm font-extrabold text-[#185038] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default"
                   >
-                    <Icon className="h-3.5 w-3.5 text-brand-600" strokeWidth={3} />
+                    <Icon className="h-4 w-4 text-[#00875a] stroke-[3]" />
                     {label}
                   </span>
                 ))}
@@ -123,44 +119,55 @@ export default function Home() {
             </FadeIn>
           </div>
 
-          {/* Right column — hero image with floating cards */}
-          <FadeIn delay={0.15} y={24}>
-            <div className="relative mx-auto max-w-lg lg:max-w-none">
-              {/* Hero image — placeholder: vegetable market shelf */}
-              <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(15,81,50,0.25)] ring-1 ring-brand-100/60">
+          {/* Right column (45% width) — hero image with floating cards and glowing sun */}
+          <FadeIn delay={0.2} y={30} className="lg:col-span-5">
+            <div className="relative mx-auto max-w-xl lg:max-w-none group">
+              {/* Decorative radiant sun positioned behind the top right of the hero image */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -top-10 -right-10 md:-top-16 md:-right-16 h-52 w-52 md:h-64 md:w-64 rounded-full blur-2xl z-0"
+                style={{
+                  background: "radial-gradient(circle, rgba(250,204,21,0.95) 0%, rgba(234,179,8,0.7) 45%, rgba(245,158,11,0.3) 70%, transparent 100%)",
+                }}
+              />
+
+              {/* Hero image with larger rounded border */}
+              <div className="relative z-10 aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-[0_24px_64px_-16px_rgba(27,77,62,0.35)] ring-4 ring-white transition-transform duration-500 group-hover:scale-[1.01]">
                 <Image
-                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80"
+                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=85"
                   alt="Fresh vegetables on a market display"
                   fill
-                  sizes="(max-width: 1024px) 90vw, 45vw"
+                  sizes="(max-width: 1024px) 95vw, 50vw"
                   className="object-cover"
                   priority
                 />
               </div>
 
               {/* Floating card: Delivery */}
-              <div className="absolute -top-3 right-2 md:-top-4 md:-right-4 rounded-2xl bg-white px-4 py-3 shadow-float border border-brand-50 flex items-start gap-2.5">
-                <span className="grid place-items-center h-8 w-8 rounded-lg bg-brand-100 text-brand-700 flex-shrink-0">
-                  <Truck className="h-4 w-4" />
+              <div className="absolute z-20 -top-4 right-1 md:-top-6 md:-right-4 rounded-2xl bg-white/95 backdrop-blur-md px-5 py-3.5 shadow-xl border border-white flex items-start gap-3 hover:-translate-y-1 transition-transform">
+                <span className="grid place-items-center h-9 w-9 rounded-xl bg-[#e3f7ed] text-[#00875a] flex-shrink-0">
+                  <Truck className="h-5 w-5" strokeWidth={2.5} />
                 </span>
                 <div className="leading-tight">
-                  <p className="text-[10px] font-bold tracking-wider text-ink-500 uppercase">
+                  <p className="text-[11px] font-extrabold tracking-wider text-gray-500 uppercase">
                     Delivery
                   </p>
-                  <p className="text-sm font-bold text-ink-900">Under 24 Hours</p>
+                  <p className="text-sm md:text-base font-black text-gray-900 mt-0.5">
+                    Under 24 Hours
+                  </p>
                 </div>
               </div>
 
               {/* Floating card: Quality */}
-              <div className="absolute -bottom-4 left-2 md:-bottom-6 md:-left-6 rounded-2xl bg-white px-4 py-3 shadow-float border border-brand-50 flex items-start gap-2.5">
-                <span className="grid place-items-center h-8 w-8 rounded-lg bg-brand-100 text-brand-700 flex-shrink-0">
-                  <Award className="h-4 w-4" />
+              <div className="absolute z-20 -bottom-6 left-1 md:-bottom-8 md:-left-6 rounded-2xl bg-white/95 backdrop-blur-md px-5 py-4 shadow-xl border border-white flex items-start gap-3.5 hover:-translate-y-1 transition-transform">
+                <span className="grid place-items-center h-10 w-10 rounded-xl bg-[#e3f7ed] text-[#00875a] flex-shrink-0">
+                  <Award className="h-6 w-6" strokeWidth={2.5} />
                 </span>
                 <div className="leading-tight">
-                  <p className="text-[10px] font-bold tracking-wider text-ink-500 uppercase">
+                  <p className="text-[11px] font-extrabold tracking-wider text-gray-500 uppercase">
                     Quality
                   </p>
-                  <p className="text-sm font-bold text-ink-900">
+                  <p className="text-sm md:text-base font-black text-gray-900 mt-0.5 leading-snug">
                     100% Organic
                     <br />
                     Certified
@@ -190,15 +197,15 @@ export default function Home() {
           </div>
         </FadeIn>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {promiseCards.map(({ icon: Icon, title, description }, i) => (
-            <FadeIn key={title} delay={i * 0.08}>
-              <div className="group h-full rounded-2xl bg-white p-6 shadow-card border border-brand-50 hover:shadow-float hover:-translate-y-1 transition-all duration-300">
-                <span className="grid place-items-center h-12 w-12 rounded-xl bg-brand-100 text-brand-700 mb-4 group-hover:bg-brand-600 group-hover:text-white transition-colors">
-                  <Icon className="h-5 w-5" />
+            <FadeIn key={title} delay={i * 0.1} y={20}>
+              <div className="group h-full rounded-3xl bg-white p-7 shadow-md border border-[#e1eee6] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+                <span className="grid place-items-center h-14 w-14 rounded-2xl bg-[#e3f7ed] text-[#00875a] mb-5 group-hover:bg-[#00875a] group-hover:text-white transition-all duration-300 group-hover:scale-110">
+                  <Icon className="h-6 w-6 stroke-[2.2]" />
                 </span>
-                <h3 className="text-lg font-bold text-ink-900 mb-2">{title}</h3>
-                <p className="text-sm text-ink-500 leading-relaxed">
+                <h3 className="text-xl font-black text-[#1b4d3e] mb-2.5">{title}</h3>
+                <p className="text-base text-[#465a4e] font-medium leading-relaxed">
                   {description}
                 </p>
               </div>

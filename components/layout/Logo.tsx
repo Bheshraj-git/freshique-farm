@@ -19,11 +19,11 @@ export default function Logo({ variant = "navbar", className }: LogoProps) {
       <Image
         src="/logo.png"
         alt="Freshique Farm"
-        width={isFooter ? 240 : 200}
-        height={isFooter ? 72 : 60}
+        width={isFooter ? 280 : 250}
+        height={isFooter ? 86 : 76}
         className={cn(
           "w-auto object-contain",
-          isFooter ? "h-14 md:h-16" : "h-12 md:h-14"
+          isFooter ? "h-16 md:h-18" : "h-14 md:h-16"
         )}
         priority
       />

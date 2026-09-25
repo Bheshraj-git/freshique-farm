@@ -60,18 +60,21 @@
 
   html,
   body {
-    background-color: oklch(0.979 0.021 166.113);
-    color: oklch(0.370 0.030 260.000);
+    background-color: #f7faf8;
+    color: #1a3328;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
   body {
-    background-image: linear-gradient(135deg,
-        oklch(0.973 0.071 103.193) 0%,
-        oklch(0.979 0.021 166.113) 50%,
-        oklch(0.925 0.084 155.995) 100%);
+    background-image: linear-gradient(
+      135deg,
+      #f8fcf5 0%,
+      #f0f8f3 40%,
+      #e8f5ee 100%
+    );
     background-attachment: fixed;
   }
 
@@ -81,9 +84,9 @@
   h4,
   h5,
   h6 {
-    font-weight: 700;
-    color: oklch(0.210 0.030 260.000);
-    letter-spacing: -0.01em;
+    font-weight: 800;
+    color: #0f2e21;
+    letter-spacing: -0.02em;
   }
 
   :focus-visible {
