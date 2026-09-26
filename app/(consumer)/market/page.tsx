@@ -42,7 +42,7 @@ export default async function MarketPage({ searchParams }: PageProps) {
   ]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 sm:py-6">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
       <div className="hidden lg:block mb-8">
         <MarketFilters cities={cities} categories={categories} />
       </div>

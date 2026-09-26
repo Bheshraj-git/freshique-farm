@@ -56,7 +56,7 @@ export default async function ProfilePage() {
   );
 
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 md:py-8">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
       <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
         <aside className="space-y-5">
           <ProfileIdentityCard

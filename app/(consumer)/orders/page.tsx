@@ -12,7 +12,7 @@ export default async function OrdersPage() {
   const orders = await getUserOrders();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-4 md:py-8">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
       <div className="flex items-center justify-between gap-4 mb-4 md:mb-8">
         <h1 className="text-2xl sm:text-3xl font-extrabold text-ink-900">My Orders</h1>
         {orders.length > 0 && (

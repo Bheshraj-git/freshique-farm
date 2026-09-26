@@ -38,7 +38,7 @@ export default async function ProductPage({ params }: PageProps) {
   const isFavorited = favoritedIds.has(product.id);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 sm:py-6">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
       <nav className="mb-4 sm:mb-8 flex items-center gap-2 text-xs sm:text-sm text-ink-500">
         <Link href="/market" className="hover:text-brand-700">
           Market
