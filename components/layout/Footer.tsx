@@ -95,7 +95,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-brand-100">
-        <div className="mx-auto max-w-7xl px-6 py-5 text-center text-xs text-ink-500">
+        <div className="mx-auto max-w-7xl px-6 py-5 pb-20 md:pb-5 text-center text-xs text-ink-500">
           © 2025 Freshique Farm • Sustainably Grown • Delivered Fresh
         </div>
       </div>
