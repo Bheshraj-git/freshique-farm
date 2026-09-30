@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { z } from "zod";
 
 const productSchema = z.object({
@@ -64,17 +65,42 @@ async function uploadProductImage(
         return { error: "Image must be under 5 MB" };
     }
 
-    const supabase = await createClient();
+    const admin = createAdminClient();
+    const userClient = await createClient();
+    const storageClient = admin ?? userClient;
+
+    // Auto-create bucket if admin client is configured
+    if (admin) {
+        try {
+            const { data: bucket } = await admin.storage.getBucket("product-images");
+            if (!bucket) {
+                await admin.storage.createBucket("product-images", {
+                    public: true,
+                    fileSizeLimit: 10485760,
+                });
+            }
+        } catch {
+            // Best effort
+        }
+    }
+
     const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
     const path = `${farmerId}/${productId}/main.${ext}`;
 
-    const { error } = await supabase.storage
+    const { error } = await storageClient.storage
         .from("product-images")
         .upload(path, file, { upsert: true, contentType: file.type });
 
-    if (error) return { error: error.message };
+    if (error) {
+        return {
+            error:
+                error.message === "Bucket not found"
+                    ? "Storage bucket 'product-images' not found. Please create it in your Supabase dashboard or run the storage setup SQL."
+                    : error.message,
+        };
+    }
 
-    const { data } = supabase.storage.from("product-images").getPublicUrl(path);
+    const { data } = storageClient.storage.from("product-images").getPublicUrl(path);
     // Cache-bust the URL so browser picks up the new image on replace
     return { url: `${data.publicUrl}?v=${Date.now()}` };
 }
@@ -136,10 +162,27 @@ export async function createProductAction(
     const file = formData.get("image") as File | null;
     if (file && file.size > 0) {
         const upload = await uploadProductImage(farmerId, data.id, file);
+        if (upload.error) {
+            revalidatePath("/farmer/dashboard/products");
+            return {
+                ok: false,
+                error: `Product saved, but image upload failed: ${upload.error}`,
+                productId: data.id,
+                slug: data.slug,
+            };
+        }
         if (upload.url) {
-            await supabase
+            const { error: imgError } = await supabase
                 .from("product_images")
                 .insert({ product_id: data.id, url: upload.url, position: 0 });
+            if (imgError) {
+                return {
+                    ok: false,
+                    error: `Product saved, but linking image failed: ${imgError.message}`,
+                    productId: data.id,
+                    slug: data.slug,
+                };
+            }
         }
     }
 
@@ -213,15 +256,27 @@ export async function updateProductAction(
     const file = formData.get("image") as File | null;
     if (file && file.size > 0) {
         const upload = await uploadProductImage(farmerId, productId, file);
+        if (upload.error) {
+            return {
+                ok: false,
+                error: `Product updated, but image upload failed: ${upload.error}`,
+            };
+        }
         if (upload.url) {
             // Delete existing images then insert one
             await supabase
                 .from("product_images")
                 .delete()
                 .eq("product_id", productId);
-            await supabase
+            const { error: imgError } = await supabase
                 .from("product_images")
                 .insert({ product_id: productId, url: upload.url, position: 0 });
+            if (imgError) {
+                return {
+                    ok: false,
+                    error: `Product updated, but saving image link failed: ${imgError.message}`,
+                };
+            }
         }
     }
 
@@ -282,7 +337,9 @@ export async function deleteProductAction(
         .filter((p): p is string => Boolean(p));
 
     if (storagePaths.length > 0) {
-        await supabase.storage.from("product-images").remove(storagePaths);
+        const admin = createAdminClient();
+        const storageClient = admin ?? supabase;
+        await storageClient.storage.from("product-images").remove(storagePaths);
     }
 
     const { error } = await supabase
