@@ -30,20 +30,14 @@ export default function AuthorAvatar({
             <div
                 className={`relative ${dims} rounded-full overflow-hidden bg-brand-100 ring-2 ring-brand-50 shrink-0`}
             >
-                {author.avatar_url ? (
-                    <Image
-                        src={author.avatar_url}
-                        alt={author.full_name}
-                        fill
-                        sizes="40px"
-                        className="object-cover"
-                        unoptimized
-                    />
-                ) : (
-                    <span className={`grid place-items-center h-full w-full font-bold text-brand-700 ${text}`}>
-                        {initials}
-                    </span>
-                )}
+                <Image
+                    src={author.avatar_url || "/default-avatar.png"}
+                    alt={author.full_name || "User"}
+                    fill
+                    sizes="40px"
+                    className="object-cover"
+                    unoptimized
+                />
             </div>
             <div className="min-w-0 flex flex-wrap items-center gap-x-2 gap-y-0.5">
                 <p className={`font-bold text-ink-900 truncate ${nameText}`}>

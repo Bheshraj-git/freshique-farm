@@ -31,20 +31,14 @@ export default function FarmerHeroBanner({
             <div className="relative p-6 md:p-10 flex flex-col md:flex-row md:items-center gap-6">
                 {/* Avatar */}
                 <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-full overflow-hidden ring-4 ring-white/70 shadow-float bg-white shrink-0 mx-auto md:mx-0">
-                    {avatarUrl ? (
-                        <Image
-                            src={avatarUrl}
-                            alt={fullName}
-                            fill
-                            sizes="128px"
-                            className="object-cover"
-                            unoptimized
-                        />
-                    ) : (
-                        <span className="grid place-items-center h-full w-full text-3xl font-extrabold text-brand-700 bg-brand-100">
-                            {initials}
-                        </span>
-                    )}
+                    <Image
+                        src={avatarUrl || "/default-avatar.png"}
+                        alt={fullName || "Farmer"}
+                        fill
+                        sizes="128px"
+                        className="object-cover"
+                        unoptimized
+                    />
                     <span className="absolute bottom-1 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 rounded-full bg-brand-600 text-white text-[10px] font-bold px-2.5 py-0.5 shadow">
                         <BadgeCheck className="h-3 w-3" />
                         Active

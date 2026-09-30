@@ -53,9 +53,9 @@ export default function FarmerSidebar({
             .toUpperCase() || "F";
 
     return (
-        <aside className="hidden lg:flex flex-col w-72 shrink-0 bg-brand-800 text-white">
+        <aside className="hidden lg:flex flex-col w-72 shrink-0 bg-brand-800 text-white sticky top-0 h-screen">
             {/* Header with Back to Home */}
-            <div className="px-6 pt-6 pb-4">
+            <div className="px-6 pt-6 pb-4 shrink-0">
                 <div className="flex items-center gap-3">
                     <span className="grid place-items-center h-10 w-10 rounded-xl bg-brand-500 text-white shrink-0">
                         <Leaf className="h-5 w-5" />
@@ -82,23 +82,17 @@ export default function FarmerSidebar({
             </div>
 
             {/* User card */}
-            <div className="px-6 py-4 border-y border-brand-700/60">
+            <div className="px-6 py-4 border-y border-brand-700/60 shrink-0">
                 <div className="flex items-center gap-3">
                     <div className="relative h-12 w-12 rounded-full overflow-hidden bg-brand-600 ring-2 ring-brand-400/50 shrink-0">
-                        {avatarUrl ? (
-                            <Image
-                                src={avatarUrl}
-                                alt={fullName}
-                                fill
-                                sizes="48px"
-                                className="object-cover"
-                                unoptimized
-                            />
-                        ) : (
-                            <span className="grid place-items-center h-full w-full text-sm font-bold text-white">
-                                {initials}
-                            </span>
-                        )}
+                        <Image
+                            src={avatarUrl || "/default-avatar.png"}
+                            alt={fullName || "User"}
+                            fill
+                            sizes="48px"
+                            className="object-cover"
+                            unoptimized
+                        />
                         <span className="absolute -bottom-0 -right-0 grid place-items-center h-4 w-4 rounded-full bg-brand-300 ring-2 ring-brand-800">
                             <span className="h-2 w-2 rounded-full bg-brand-700" />
                         </span>
@@ -114,7 +108,7 @@ export default function FarmerSidebar({
             </div>
 
             {/* Nav */}
-            <nav className="flex-1 overflow-y-auto px-3 py-4">
+            <nav className="flex-1 overflow-y-auto px-3 py-4 min-h-0">
                 <ul className="space-y-1">
                     {navItems.map(({ href, label, icon: Icon }) => {
                         const active =
@@ -145,17 +139,17 @@ export default function FarmerSidebar({
             </nav>
 
             {/* Sign out */}
-            <div className="px-4 pb-4">
+            <div className="px-4 pb-4 pt-2 border-t border-brand-700/60 shrink-0 mt-auto">
                 <form action={signOutAction}>
                     <button
                         type="submit"
-                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-danger-600 px-4 py-3 text-sm font-bold text-white hover:bg-danger-500 transition"
+                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-danger-600 px-4 py-3 text-sm font-bold text-white hover:bg-danger-500 transition shadow-sm"
                     >
                         <LogOut className="h-4 w-4" />
                         Logout
                     </button>
                 </form>
-                <p className="mt-4 text-center text-[11px] text-brand-300">
+                <p className="mt-3 text-center text-[11px] text-brand-300">
                     © 2025 Freshique Farm
                 </p>
             </div>

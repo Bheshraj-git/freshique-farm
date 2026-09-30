@@ -56,20 +56,14 @@ export default function UserMenu() {
         aria-haspopup="menu"
         className="flex items-center gap-2 rounded-xl border border-brand-100 bg-white px-2 py-1.5 shadow-soft hover:bg-brand-50 transition"
       >
-        {profile?.avatar_url ? (
-          <Image
-            src={profile.avatar_url}
-            alt={profile.full_name}
-            width={32}
-            height={32}
-            className="h-8 w-8 rounded-full object-cover"
-            unoptimized
-          />
-        ) : (
-          <span className="grid place-items-center h-8 w-8 rounded-full bg-brand-600 text-white text-xs font-bold">
-            {initials}
-          </span>
-        )}
+        <Image
+          src={profile?.avatar_url || "/default-avatar.png"}
+          alt={profile?.full_name || "Account"}
+          width={32}
+          height={32}
+          className="h-8 w-8 rounded-full object-cover"
+          unoptimized
+        />
         <span className="text-sm font-semibold text-ink-900 hidden lg:inline">
           {profile?.full_name?.split(" ")[0] || "Account"}
         </span>

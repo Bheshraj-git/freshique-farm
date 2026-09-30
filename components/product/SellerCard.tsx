@@ -29,20 +29,14 @@ export default function SellerCard({
       <div className="flex items-center gap-4">
         {/* Avatar */}
         <div className="relative h-14 w-14 rounded-full overflow-hidden ring-2 ring-brand-100 shrink-0">
-          {farmerAvatar ? (
-            <Image
-              src={farmerAvatar}
-              alt={farmerName}
-              fill
-              sizes="56px"
-              className="object-cover"
-              unoptimized
-            />
-          ) : (
-            <span className="grid place-items-center h-full w-full bg-brand-600 text-white text-sm font-bold">
-              {initials}
-            </span>
-          )}
+          <Image
+            src={farmerAvatar || "/default-avatar.png"}
+            alt={farmerName || "Farmer"}
+            fill
+            sizes="56px"
+            className="object-cover"
+            unoptimized
+          />
         </div>
 
         <div className="flex-1 min-w-0">

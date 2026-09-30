@@ -31,20 +31,14 @@ export default function ProfileIdentityCard({
       {/* Avatar overlapping banner */}
       <div className="px-5 pb-5 -mt-10">
         <div className="relative h-20 w-20 rounded-2xl overflow-hidden bg-brand-50 ring-4 ring-white shadow-card">
-          {avatarUrl ? (
-            <Image
-              src={avatarUrl}
-              alt={fullName}
-              fill
-              sizes="80px"
-              className="object-cover"
-              unoptimized
-            />
-          ) : (
-            <span className="grid place-items-center h-full w-full text-2xl font-extrabold text-brand-700 bg-brand-100">
-              {initials}
-            </span>
-          )}
+          <Image
+            src={avatarUrl || "/default-avatar.png"}
+            alt={fullName || "User"}
+            fill
+            sizes="80px"
+            className="object-cover"
+            unoptimized
+          />
         </div>
 
         <p className="mt-3 text-lg font-bold text-ink-900 truncate">
