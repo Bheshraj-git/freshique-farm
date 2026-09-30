@@ -13,17 +13,23 @@ export default function Logo({ variant = "navbar", className }: LogoProps) {
   return (
     <Link
       href="/"
-      className={cn("inline-flex items-center transition-opacity hover:opacity-90", className)}
+      className={cn(
+        "inline-flex items-center transition-opacity hover:opacity-90",
+        !isFooter && "-ml-3 md:-ml-[17px]",
+        className
+      )}
       aria-label="Freshique Farm home"
     >
       <Image
         src="/logo.png"
         alt="Freshique Farm"
-        width={isFooter ? 280 : 250}
-        height={isFooter ? 86 : 76}
+        width={160}
+        height={87}
         className={cn(
-          "w-auto object-contain",
-          isFooter ? "h-16 md:h-18" : "h-9 md:h-16"
+          "object-contain",
+          isFooter
+            ? "w-[160px] h-[87px] md:w-[180px] md:h-auto"
+            : "w-[120px] h-[65px] md:w-[160px] md:h-[87px]"
         )}
         priority
       />

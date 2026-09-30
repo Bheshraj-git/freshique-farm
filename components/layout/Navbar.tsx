@@ -75,7 +75,7 @@ export default function Navbar() {
 
       {/* Desktop Header */}
       <header className="hidden md:block fixed top-0 left-0 right-0 z-40 bg-white rounded-b-[2.5rem] shadow-[0_4px_30px_-6px_rgba(0,0,0,0.06)]">
-        <nav className="mx-auto max-w-7xl px-6 lg:px-8 py-3.5 flex items-center justify-between">
+        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
         {/* Left: Logo aligned with page content */}
         <div className="flex items-center">
           <Logo />

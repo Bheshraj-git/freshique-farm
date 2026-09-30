@@ -120,7 +120,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 pt-20 pb-12 sm:pt-24 sm:pb-16 lg:pt-28 lg:pb-12 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-24 sm:pb-16 lg:pt-28 lg:pb-12 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
             {/* Left Column */}
             <div className="text-center lg:text-left space-y-6 sm:space-y-8 order-2 lg:order-1">
