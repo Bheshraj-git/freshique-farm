@@ -112,11 +112,12 @@ export default function FarmerSidebar({
                 <ul className="space-y-1">
                     {navItems.map(({ href, label, icon: Icon }) => {
                         const active =
-                            pathname === href ||
-                            (href !== "/farmer/dashboard/profile" &&
-                                pathname.startsWith(href + "/")) ||
-                            (href.endsWith("/products") &&
-                                pathname.startsWith("/farmer/dashboard/products"));
+                            href === "/farmer/dashboard/products/new"
+                                ? pathname === "/farmer/dashboard/products/new"
+                                : href === "/farmer/dashboard/products"
+                                ? pathname.startsWith("/farmer/dashboard/products") &&
+                                  pathname !== "/farmer/dashboard/products/new"
+                                : pathname === href || pathname.startsWith(href + "/");
 
                         return (
                             <li key={href}>

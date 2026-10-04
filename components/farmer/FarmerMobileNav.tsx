@@ -51,7 +51,13 @@ export default function FarmerMobileNav() {
             <div className="overflow-x-auto px-3 py-2 scrollbar-none">
                 <ul className="flex gap-2 w-max">
                     {items.map(({ href, label, icon: Icon }) => {
-                        const active = pathname === href || pathname.startsWith(href + "/");
+                        const active =
+                            href === "/farmer/dashboard/products/new"
+                                ? pathname === "/farmer/dashboard/products/new"
+                                : href === "/farmer/dashboard/products"
+                                ? pathname.startsWith("/farmer/dashboard/products") &&
+                                  pathname !== "/farmer/dashboard/products/new"
+                                : pathname === href || pathname.startsWith(href + "/");
                         return (
                             <li key={href}>
                                 <Link
