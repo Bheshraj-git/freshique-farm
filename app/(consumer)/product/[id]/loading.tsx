@@ -1,14 +1,14 @@
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-7xl px-6 py-6">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
       {/* Breadcrumb skeleton */}
-      <div className="mb-8 flex items-center gap-2">
+      <div className="mb-4 sm:mb-8 flex items-center gap-2">
         <div className="h-4 w-16 rounded bg-brand-50 animate-pulse" />
         <div className="h-4 w-4 rounded bg-brand-50 animate-pulse" />
         <div className="h-4 w-20 rounded bg-brand-50 animate-pulse" />
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-start">
         {/* Gallery skeleton */}
         <div className="space-y-4">
           <div className="aspect-square rounded-3xl bg-brand-50 animate-pulse" />

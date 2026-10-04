@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-6">
-      <div className="h-9 w-40 rounded bg-brand-50 animate-pulse mb-8" />
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
+      <div className="h-9 w-40 rounded bg-brand-50 animate-pulse mb-4 md:mb-8" />
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (

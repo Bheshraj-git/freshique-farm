@@ -1,7 +1,9 @@
 export default function Loading() {
   return (
-    <div className="mx-auto max-w-4xl px-6 py-8">
-      <div className="h-9 w-40 rounded bg-brand-50 animate-pulse mb-8" />
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
+      <div className="flex items-center justify-between gap-4 mb-4 md:mb-8">
+        <div className="h-9 w-40 rounded bg-brand-50 animate-pulse" />
+      </div>
       <div className="space-y-4">
         {Array.from({ length: 3 }).map((_, i) => (
           <div
