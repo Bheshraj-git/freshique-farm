@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -11,7 +12,10 @@ import {
     ClipboardList,
     Leaf,
     ArrowLeft,
+    LogOut,
+    Loader2,
 } from "lucide-react";
+import { signOutAction } from "@/app/(auth)/actions";
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -26,25 +30,55 @@ const items = [
 
 export default function FarmerMobileNav() {
     const pathname = usePathname();
+    const [loggingOut, setLoggingOut] = useState(false);
+
+    const handleLogout = async () => {
+        try {
+            setLoggingOut(true);
+            await signOutAction();
+            window.location.href = "/";
+        } catch {
+            setLoggingOut(false);
+        }
+    };
 
     return (
         <header className="lg:hidden sticky top-0 z-40 bg-brand-800 text-white border-b border-brand-700/60 shadow-md">
-            {/* Top Bar with Back to Home Link */}
-            <div className="flex items-center justify-between px-4 py-2.5 border-b border-brand-700/40">
-                <div className="flex items-center gap-2">
+            {/* Top Bar with Back to Home Link & Logout Button */}
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-brand-700/40 gap-2">
+                <div className="flex items-center gap-2 min-w-0">
                     <span className="grid place-items-center h-7 w-7 rounded-lg bg-brand-500 text-white shrink-0">
                         <Leaf className="h-4 w-4" />
                     </span>
-                    <span className="text-sm font-extrabold tracking-tight">Farmer Portal</span>
+                    <span className="text-sm font-extrabold tracking-tight truncate">
+                        Farmer Portal
+                    </span>
                 </div>
 
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-700/60 hover:bg-brand-700 text-xs font-semibold text-brand-100 hover:text-white border border-brand-600/40 transition"
-                >
-                    <ArrowLeft className="h-3 w-3" />
-                    <span>Back to Home</span>
-                </Link>
+                <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-brand-700/60 hover:bg-brand-700 text-xs font-semibold text-brand-100 hover:text-white border border-brand-600/40 transition"
+                    >
+                        <ArrowLeft className="h-3.5 w-3.5" />
+                        <span>Home</span>
+                    </Link>
+
+                    <button
+                        type="button"
+                        onClick={handleLogout}
+                        disabled={loggingOut}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-danger-600 hover:bg-danger-500 disabled:opacity-70 text-xs font-bold text-white shadow-xs transition active:scale-95 cursor-pointer"
+                        title="Log out of farmer portal"
+                    >
+                        {loggingOut ? (
+                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                            <LogOut className="h-3.5 w-3.5" />
+                        )}
+                        <span>{loggingOut ? "..." : "Logout"}</span>
+                    </button>
+                </div>
             </div>
 
             {/* Horizontal Scrollable Tabs */}
@@ -75,6 +109,17 @@ export default function FarmerMobileNav() {
                             </li>
                         );
                     })}
+                    <li>
+                        <button
+                            type="button"
+                            onClick={handleLogout}
+                            disabled={loggingOut}
+                            className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold whitespace-nowrap bg-danger-600/80 hover:bg-danger-600 text-white transition cursor-pointer active:scale-95"
+                        >
+                            <LogOut className="h-3.5 w-3.5" />
+                            <span>Logout</span>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </header>
