@@ -8,6 +8,9 @@ import {
   Check,
   Truck,
 } from "lucide-react";
+import CategoryProductsSection from "@/components/home/CategoryProductsSection";
+import { listProducts } from "@/lib/queries/products";
+import { getFavoritedProductIds } from "@/lib/queries/favorites";
 
 /* ============================================================
    DATA (Matching https://freshiquefarm.vercel.app/)
@@ -65,7 +68,12 @@ const farmers = [
    PAGE COMPONENT
    ============================================================ */
 
-export default function Home() {
+export default async function Home() {
+  const [{ products }, favoritedIds] = await Promise.all([
+    listProducts({ limit: 50 }).catch(() => ({ products: [] })),
+    getFavoritedProductIds().catch(() => new Set<string>()),
+  ]);
+
   return (
     <div className="overflow-x-hidden">
       {/* ============================== HERO ============================== */}
@@ -240,6 +248,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ============================== FEATURED CATEGORY PRODUCTS ============================== */}
+      <CategoryProductsSection
+        products={products}
+        favoritedIds={favoritedIds}
+      />
 
       {/* ============================== WHY CHOOSE FRESHIQUE ============================== */}
       <section className="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-white via-lime-50/30 to-white relative overflow-hidden">
