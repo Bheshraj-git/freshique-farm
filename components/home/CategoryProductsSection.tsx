@@ -230,6 +230,7 @@ export default function CategoryProductsSection({
                   key={product.id}
                   product={product}
                   initialFavorited={favoritedIds.has(product.id)}
+                  showAddToCart={false}
                 />
               ))}
             </div>

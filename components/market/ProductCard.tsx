@@ -10,11 +10,13 @@ import type { ProductCard as ProductCardType } from "@/lib/queries/products";
 interface Props {
   product: ProductCardType;
   initialFavorited?: boolean;
+  showAddToCart?: boolean;
 }
 
 export default function ProductCard({
   product,
   initialFavorited = false,
+  showAddToCart = true,
 }: Props) {
   return (
     <div className="group relative rounded-2xl bg-white border border-brand-50 shadow-card hover:shadow-float hover:-translate-y-0.5 transition-all duration-200 overflow-hidden">
@@ -65,17 +67,19 @@ export default function ProductCard({
             <p className="text-xs text-ink-500 truncate">per {product.unit}</p>
           </div>
 
-          <AddToCartInline
-            productId={product.id}
-            productName={product.name}
-            productPrice={product.price}
-            productUnit={product.unit}
-            productImage={product.primary_image}
-            productCity={product.city}
-            productSlug={product.slug}
-            productStock={99}
-            farmerName={null}
-          />
+          {showAddToCart && (
+            <AddToCartInline
+              productId={product.id}
+              productName={product.name}
+              productPrice={product.price}
+              productUnit={product.unit}
+              productImage={product.primary_image}
+              productCity={product.city}
+              productSlug={product.slug}
+              productStock={99}
+              farmerName={null}
+            />
+          )}
         </div>
       </div>
     </div>
