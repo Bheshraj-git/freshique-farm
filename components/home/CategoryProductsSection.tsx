@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import ProductCard from "@/components/market/ProductCard";
 import type { ProductCard as ProductCardType } from "@/lib/queries/products";
 
-// Fallback products matching what we already have in our database/project
 const FALLBACK_PRODUCTS: ProductCardType[] = [
   {
     id: "bd6c712a-5371-4730-8841-87b886b98009",
@@ -176,7 +175,6 @@ export default function CategoryProductsSection({
   products,
   favoritedIds = new Set(),
 }: Props) {
-  // Use DB products if provided and not empty, otherwise fallback to our project products
   const productList =
     products && products.length > 0 ? products : FALLBACK_PRODUCTS;
 
