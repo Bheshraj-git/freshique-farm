@@ -12,9 +12,7 @@ import CategoryProductsSection from "@/components/home/CategoryProductsSection";
 import { listProducts } from "@/lib/queries/products";
 import { getFavoritedProductIds } from "@/lib/queries/favorites";
 
-/* ============================================================
-   DATA (Matching https://freshiquefarm.vercel.app/)
-   ============================================================ */
+
 
 const heroFeatures = [
   { label: "Verified Farmers" },
