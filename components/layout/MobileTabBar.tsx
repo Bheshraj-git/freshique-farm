@@ -35,7 +35,8 @@ export default function MobileTabBar() {
 
   return (
     <nav
-      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-brand-100 shadow-[0_-4px_16px_-4px_rgba(15,81,50,0.08)] pb-[env(safe-area-inset-bottom,0px)]"
+      className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-brand-100 shadow-[0_-4px_16px_-4px_rgba(15,81,50,0.08)] pb-[env(safe-area-inset-bottom,0px)]"
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       aria-label="Mobile navigation"
     >
       <ul className="grid grid-cols-4 px-1 py-1">

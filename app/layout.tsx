@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/lib/toast";
@@ -19,6 +19,12 @@ export const metadata: Metadata = {
     "Experience the taste of pure nature. Real-time farm tracking, same-day harvest, and absolutely 100% chemical-free.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -28,7 +34,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={quicksand.variable}>
-      <body className="min-h-screen font-sans">
+      <body className="min-h-screen min-h-dvh font-sans">
         <ToastProvider>
           <CartHydrator initialItems={cartLines} />
           {children}
