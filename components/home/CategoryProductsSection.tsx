@@ -202,10 +202,10 @@ export default function CategoryProductsSection({
   ].filter((cat) => cat.items.length > 0);
 
   return (
-    <section className="bg-gradient-to-b from-lime-50/50 via-white to-lime-50/30 py-12 sm:py-16 md:py-24 border-b border-emerald-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
+    <section className="bg-gradient-to-b from-lime-50/50 via-white to-lime-50/30 py-10 sm:py-14 md:py-16 border-b border-emerald-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10 md:space-y-12">
         {categoriesToRender.map(({ slug, meta, items }) => (
-          <div key={slug} className="space-y-6 sm:space-y-8">
+          <div key={slug} className="space-y-5 sm:space-y-6">
             {/* Category Heading matching the aesthetic */}
             <div className="text-center">
               <h2
@@ -214,9 +214,9 @@ export default function CategoryProductsSection({
                 {meta.title}
               </h2>
               <div
-                className={`h-1.5 w-20 sm:w-24 mx-auto mt-3 sm:mt-4 ${meta.gradientBar} rounded-full`}
+                className={`h-1.5 w-20 sm:w-24 mx-auto mt-2.5 sm:mt-3 ${meta.gradientBar} rounded-full`}
               />
-              <p className="mt-2.5 text-xs sm:text-sm text-gray-500 font-medium">
+              <p className="mt-2 text-xs sm:text-sm text-gray-500 font-medium">
                 {meta.subtitle}
               </p>
             </div>
@@ -234,7 +234,7 @@ export default function CategoryProductsSection({
             </div>
 
             {/* Category link to market */}
-            <div className="flex justify-center pt-2">
+            <div className="flex justify-center pt-1">
               <Link
                 href={`/market?category=${slug}`}
                 className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-700 hover:text-emerald-800 hover:underline transition-colors"
