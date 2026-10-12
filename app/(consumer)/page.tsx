@@ -11,6 +11,7 @@ import {
 import CategoryProductsSection from "@/components/home/CategoryProductsSection";
 import { listProducts } from "@/lib/queries/products";
 import { getFavoritedProductIds } from "@/lib/queries/favorites";
+import { createClient } from "@/lib/supabase/server";
 
 
 
@@ -55,53 +56,65 @@ const promiseCards = [
   },
 ];
 
-const farmers = [
-  {
+async function getTopFarmers() {
+  const gauravFarmer = {
     id: "68fdd218690a372d3938ae6b",
     name: "Goswami Gaurav m.",
     location: "Bhavnagar, Gujarat",
     orders: 14,
-    avatar:
-      "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
     badge: "Top Farmer",
-  },
-  {
-    id: "68fdd218690a372d3938ae6b",
-    name: "Adityaraj Gohi",
-    location: "Bhavnagar, Gujarat",
-    orders: 7,
-    avatar:
-      "https://ui-avatars.com/api/?name=Adityaraj+Gohi&background=ECFDF5&color=0F5132&size=160&bold=true",
-    badge: "Verified Organic",
-  },
-  {
-    id: "b9325565-8537-4097-b9ff-f5ae8a90cd83",
-    name: "Ramesh Patel",
-    location: "Bhavnagar, Gujarat",
-    orders: 12,
-    avatar:
-      "https://ui-avatars.com/api/?name=Ramesh+Patel&background=FEF3C7&color=92400E&size=160&bold=true",
-    badge: "Top Rated",
-  },
-  {
-    id: "68fdd218690a372d3938ae6b",
-    name: "Goswami Gaurav",
-    location: "Bhavnagar, Gujarat",
-    orders: 11,
-    avatar:
-      "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
-    badge: "Customer Favorite",
-  },
-];
+  };
+
+  try {
+    const supabase = await createClient();
+    const { data: dbFarmers } = await supabase
+      .from("profiles")
+      .select("id, full_name, city, state")
+      .eq("role", "farmer");
+
+    if (dbFarmers && dbFarmers.length > 0) {
+      const dbMapped = dbFarmers.map((f, i) => ({
+        id: f.id,
+        name: f.full_name || "Test Farmer",
+        location: `${f.city || "Bhavnagar"}, ${f.state || "Gujarat"}`,
+        orders: 12 + i,
+        badge: i === 0 ? "Verified Producer" : "Local Farmer",
+      }));
+
+      // Combine Gaurav + all DB farmers (including Test Farmer and any other farmers), deduplicate
+      const farmersList = [gauravFarmer];
+      for (const df of dbMapped) {
+        if (!farmersList.some((x) => x.id === df.id)) {
+          farmersList.push(df);
+        }
+      }
+      return farmersList;
+    }
+  } catch {
+    // fall through
+  }
+
+  return [
+    gauravFarmer,
+    {
+      id: "b9325565-8537-4097-b9ff-f5ae8a90cd83",
+      name: "Test Farmer",
+      location: "Bhavnagar, Gujarat",
+      orders: 12,
+      badge: "Verified Producer",
+    },
+  ];
+}
 
 /* ============================================================
    PAGE COMPONENT
    ============================================================ */
 
 export default async function Home() {
-  const [{ products }, favoritedIds] = await Promise.all([
+  const [{ products }, favoritedIds, farmers] = await Promise.all([
     listProducts({ limit: 50 }).catch(() => ({ products: [] })),
     getFavoritedProductIds().catch(() => new Set<string>()),
+    getTopFarmers(),
   ]);
 
   return (
@@ -348,45 +361,51 @@ export default async function Home() {
           </p>
         </div>
 
-        <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          {farmers.map((farmer, i) => (
-            <Link
-              key={`${farmer.name}-${i}`}
-              href={`/farmerPage/${farmer.id}`}
-              className="group block rounded-2xl bg-white p-5 sm:p-6 shadow-card border border-brand-50 hover:shadow-float hover:-translate-y-1.5 transition-all duration-300 text-center cursor-pointer"
-            >
-              {/* Avatar */}
-              <div className="relative mx-auto mb-3 sm:mb-4 h-16 w-16 sm:h-20 sm:w-20">
-                <div className="absolute inset-0 rounded-full overflow-hidden ring-4 ring-brand-100 group-hover:ring-brand-300 transition-all">
-                  <Image
-                    src={farmer.avatar}
-                    alt={farmer.name}
-                    fill
-                    sizes="80px"
-                    className="object-cover group-hover:scale-108 transition-transform duration-500"
-                    unoptimized
-                  />
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto">
+          {farmers.map((farmer, i) => {
+            const initials =
+              farmer.name
+                .split(" ")
+                .map((n) => n[0])
+                .filter(Boolean)
+                .slice(0, 2)
+                .join("")
+                .toUpperCase() || "F";
+
+            return (
+              <Link
+                key={`${farmer.id}-${i}`}
+                href={`/farmerPage/${farmer.id}`}
+                className="group block rounded-2xl bg-white p-6 sm:p-7 shadow-card border border-brand-50 hover:shadow-float hover:-translate-y-1.5 transition-all duration-300 text-center cursor-pointer"
+              >
+                {/* Initials Avatar - No photo */}
+                <div className="relative mx-auto mb-3 sm:mb-4 h-16 w-16 sm:h-20 sm:w-20">
+                  <div className="w-full h-full rounded-full bg-emerald-100/90 text-emerald-800 flex items-center justify-center font-black text-xl sm:text-2xl ring-4 ring-emerald-50 group-hover:ring-emerald-200 group-hover:bg-emerald-200 transition-all select-none">
+                    {initials}
+                  </div>
+                  <span className="absolute -bottom-1 -right-1 grid place-items-center h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-brand-600 text-white ring-2 ring-white">
+                    <Check className="h-3 w-3" strokeWidth={3} />
+                  </span>
                 </div>
-                <span className="absolute -bottom-1 -right-1 grid place-items-center h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-brand-600 text-white ring-2 ring-white">
-                  <Check className="h-3 w-3" strokeWidth={3} />
-                </span>
-              </div>
 
-              <p className="text-xs font-bold uppercase tracking-wider text-accent-500 mb-1">
-                {farmer.orders} Orders
-              </p>
-              <h3 className="text-base font-bold text-ink-900 group-hover:text-brand-700 transition-colors">
-                {farmer.name}
-              </h3>
-              <p className="text-xs sm:text-sm text-ink-500 mt-0.5">{farmer.location}</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-accent-500 mb-1">
+                  {farmer.orders} Orders
+                </p>
+                <h3 className="text-base font-bold text-ink-900 group-hover:text-brand-700 transition-colors">
+                  {farmer.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-ink-500 mt-0.5">
+                  {farmer.location}
+                </p>
 
-              <div className="mt-3 sm:mt-4">
-                <span className="inline-flex items-center font-semibold rounded-full whitespace-nowrap bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-0.5">
-                  {farmer.badge || "Top Rated"}
-                </span>
-              </div>
-            </Link>
-          ))}
+                <div className="mt-3 sm:mt-4">
+                  <span className="inline-flex items-center font-semibold rounded-full whitespace-nowrap bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-0.5">
+                    {farmer.badge || "Top Rated"}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </div>

@@ -95,7 +95,9 @@ export default function FarmerHero({ farmer }: Props) {
                 <Image
                   src={
                     farmer.profilePicture ||
-                    "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg"
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                      farmer.fullName || "Farmer"
+                    )}&background=047857&color=fff&size=200&bold=true`
                   }
                   alt={farmer.fullName}
                   fill

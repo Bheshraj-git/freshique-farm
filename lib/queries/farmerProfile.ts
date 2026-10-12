@@ -585,21 +585,21 @@ export async function getPublicFarmerProfile(
         },
         farmType: "Farm",
         stats: {
-          totalOrders: Math.max(totalOrdersCount, 14),
-          deliveredOrders: Math.max(totalOrdersCount - 3, 11),
+          totalOrders: Math.max(totalOrdersCount, 12),
+          deliveredOrders: Math.max(totalOrdersCount - 2, 10),
           monthlyGrowth: 0,
           rating: 4.9,
           totalProducts: productsList.length,
-          totalBlogs: blogs.length || GAURAV_FALLBACK.blogs.length,
-        joinedDate: new Date(profile.created_at).toLocaleDateString("en-US", {
+          totalBlogs: blogs.length,
+          joinedDate: new Date(profile.created_at).toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
             year: "numeric",
           }),
         },
-        topProducts: topProducts.length ? topProducts : GAURAV_FALLBACK.topProducts,
-        products: productsList.length ? productsList : GAURAV_FALLBACK.products,
-        blogs: blogs.length ? blogs : GAURAV_FALLBACK.blogs,
+        topProducts: topProducts.length ? topProducts : productsList.slice(0, 6),
+        products: productsList,
+        blogs: blogs,
       };
     }
   } catch (err) {
