@@ -121,9 +121,20 @@ export async function listProducts(filters: ProductFilters = {}) {
   };
 }
 
+const MONGO_ID_TO_UUID: Record<string, string> = {
+  "69329478265379f365cb1bf6": "bd6c712a-5371-4730-8841-87b886b98009", // Grapes
+  "69329373265379f365cb1bf0": "ed69e54d-5c9a-4bde-9149-363c3a0e1214", // Papaya
+  "6905f0ba7dd8593f64a14c01": "4164eeda-7881-442d-9c34-90dd5d97576b", // Red Dragonfruit
+  "693292d6265379f365cb1be5": "4f96fbaf-6c8e-4bcc-86f8-40a993df18e0", // Oranges
+  "6905f0017dd8593f64a14bf3": "ed315aed-1283-4477-9a84-771bfb1c75ad", // Apple Kashmir
+  "6905eeac7dd8593f64a14be7": "ead3fa8e-9456-45b1-ae98-38bd5b98e8c0", // Banana
+};
+
 export async function getProductById(id: string): Promise<ProductDetail | null> {
+  const targetId = MONGO_ID_TO_UUID[id] || id;
+
   // Guard against obviously invalid ids (uuid shape)
-  if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
+  if (!/^[0-9a-f-]{36}$/i.test(targetId)) return null;
 
   const supabase = await createClient();
   const { data, error } = await supabase

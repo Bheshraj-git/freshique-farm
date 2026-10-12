@@ -56,10 +56,42 @@ const promiseCards = [
 ];
 
 const farmers = [
-  { name: "Adityaraj Gohi", location: "Bhavnagar, Gujarat", orders: 7 },
-  { name: "Goswami Gaurav", location: "Bhavnagar, Gujarat", orders: 11 },
-  { name: "Adityaraj Gohi", location: "Bhavnagar, Gujarat", orders: 7 },
-  { name: "Goswami Gaurav", location: "Bhavnagar, Gujarat", orders: 11 },
+  {
+    id: "68fdd218690a372d3938ae6b",
+    name: "Goswami Gaurav m.",
+    location: "Bhavnagar, Gujarat",
+    orders: 14,
+    avatar:
+      "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
+    badge: "Top Farmer",
+  },
+  {
+    id: "68fdd218690a372d3938ae6b",
+    name: "Adityaraj Gohi",
+    location: "Bhavnagar, Gujarat",
+    orders: 7,
+    avatar:
+      "https://ui-avatars.com/api/?name=Adityaraj+Gohi&background=ECFDF5&color=0F5132&size=160&bold=true",
+    badge: "Verified Organic",
+  },
+  {
+    id: "b9325565-8537-4097-b9ff-f5ae8a90cd83",
+    name: "Ramesh Patel",
+    location: "Bhavnagar, Gujarat",
+    orders: 12,
+    avatar:
+      "https://ui-avatars.com/api/?name=Ramesh+Patel&background=FEF3C7&color=92400E&size=160&bold=true",
+    badge: "Top Rated",
+  },
+  {
+    id: "68fdd218690a372d3938ae6b",
+    name: "Goswami Gaurav",
+    location: "Bhavnagar, Gujarat",
+    orders: 11,
+    avatar:
+      "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
+    badge: "Customer Favorite",
+  },
 ];
 
 /* ============================================================
@@ -318,21 +350,20 @@ export default async function Home() {
 
         <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {farmers.map((farmer, i) => (
-            <div
+            <Link
               key={`${farmer.name}-${i}`}
-              className="group rounded-2xl bg-white p-5 sm:p-6 shadow-card border border-brand-50 hover:shadow-float hover:-translate-y-1 transition-all duration-300 text-center"
+              href={`/farmerPage/${farmer.id}`}
+              className="group block rounded-2xl bg-white p-5 sm:p-6 shadow-card border border-brand-50 hover:shadow-float hover:-translate-y-1.5 transition-all duration-300 text-center cursor-pointer"
             >
               {/* Avatar */}
               <div className="relative mx-auto mb-3 sm:mb-4 h-16 w-16 sm:h-20 sm:w-20">
-                <div className="absolute inset-0 rounded-full overflow-hidden ring-4 ring-brand-100">
+                <div className="absolute inset-0 rounded-full overflow-hidden ring-4 ring-brand-100 group-hover:ring-brand-300 transition-all">
                   <Image
-                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      farmer.name
-                    )}&background=ECFDF5&color=0F5132&size=160&bold=true`}
+                    src={farmer.avatar}
                     alt={farmer.name}
                     fill
                     sizes="80px"
-                    className="object-cover"
+                    className="object-cover group-hover:scale-108 transition-transform duration-500"
                     unoptimized
                   />
                 </div>
@@ -344,17 +375,17 @@ export default async function Home() {
               <p className="text-xs font-bold uppercase tracking-wider text-accent-500 mb-1">
                 {farmer.orders} Orders
               </p>
-              <h3 className="text-base font-bold text-ink-900">
+              <h3 className="text-base font-bold text-ink-900 group-hover:text-brand-700 transition-colors">
                 {farmer.name}
               </h3>
               <p className="text-xs sm:text-sm text-ink-500 mt-0.5">{farmer.location}</p>
 
               <div className="mt-3 sm:mt-4">
                 <span className="inline-flex items-center font-semibold rounded-full whitespace-nowrap bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-0.5">
-                  Top Rated
+                  {farmer.badge || "Top Rated"}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
