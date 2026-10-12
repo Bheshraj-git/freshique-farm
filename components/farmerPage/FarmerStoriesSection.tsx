@@ -119,8 +119,11 @@ export default function FarmerStoriesSection({ blogs }: Props) {
                       <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-emerald-100">
                         <Image
                           src={
-                            blog.authorAvatar ||
-                            "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg"
+                            blog.authorAvatar && !blog.authorAvatar.includes("chs5mh6tnxh72cj0p4ej")
+                              ? blog.authorAvatar
+                              : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                  blog.authorName || "Farmer"
+                                )}&background=047857&color=fff&size=160&bold=true`
                           }
                           alt={blog.authorName}
                           fill
@@ -217,8 +220,11 @@ export default function FarmerStoriesSection({ blogs }: Props) {
                   <div className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-emerald-200">
                     <Image
                       src={
-                        selectedBlog.authorAvatar ||
-                        "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg"
+                        selectedBlog.authorAvatar && !selectedBlog.authorAvatar.includes("chs5mh6tnxh72cj0p4ej")
+                          ? selectedBlog.authorAvatar
+                          : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                              selectedBlog.authorName || "Farmer"
+                            )}&background=047857&color=fff&size=160&bold=true`
                       }
                       alt={selectedBlog.authorName}
                       fill

@@ -61,7 +61,7 @@ const GAURAV_FALLBACK: PublicFarmerProfile = {
   email: "gaurav02105@gmail.com",
   phoneNumber: "951239963",
   profilePicture:
-    "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
+    "https://ui-avatars.com/api/?name=Goswami+Gaurav+m.&background=047857&color=fff&size=200&bold=true",
   location: {
     address: "sardarnagar circle pase",
     city: "Bhavnagar",
@@ -369,7 +369,7 @@ const GAURAV_FALLBACK: PublicFarmerProfile = {
       createdAt: "2025-12-26T04:10:07.621Z",
       authorName: "Goswami Gaurav m.",
       authorAvatar:
-        "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
+        "https://ui-avatars.com/api/?name=Goswami+Gaurav+m.&background=047857&color=fff&size=160&bold=true",
       authorRole: "Farmer & Blogger",
       likesCount: 127,
     },
@@ -383,7 +383,7 @@ const GAURAV_FALLBACK: PublicFarmerProfile = {
       createdAt: "2025-11-26T09:50:01.315Z",
       authorName: "Goswami Gaurav m.",
       authorAvatar:
-        "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
+        "https://ui-avatars.com/api/?name=Goswami+Gaurav+m.&background=047857&color=fff&size=160&bold=true",
       authorRole: "Farmer & Blogger",
       likesCount: 13,
     },
@@ -659,7 +659,10 @@ function shapeBackendFarmerData(data: any, id: string): PublicFarmerProfile {
         : "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1200&auto=format&fit=crop",
     createdAt: b.createdAt || new Date().toISOString(),
     authorName: b.authorName || f.fullName || "Goswami Gaurav m.",
-    authorAvatar: b.authorAvatar || f.profilePicture,
+    authorAvatar:
+      b.authorAvatar && !b.authorAvatar.includes("chs5mh6tnxh72cj0p4ej")
+        ? b.authorAvatar
+        : `https://ui-avatars.com/api/?name=${encodeURIComponent(b.authorName || f.fullName || "Farmer")}&background=047857&color=fff&size=160&bold=true`,
     authorRole: "Farmer & Blogger",
     likesCount: Array.isArray(b.likes) ? b.likes.length : b.__v ?? 12,
   }));
@@ -670,8 +673,9 @@ function shapeBackendFarmerData(data: any, id: string): PublicFarmerProfile {
     email: f.email || null,
     phoneNumber: f.phoneNumber || "951239963",
     profilePicture:
-      f.profilePicture ||
-      "https://res.cloudinary.com/dsxyfatqg/image/upload/v1761464992/chs5mh6tnxh72cj0p4ej.jpg",
+      f.profilePicture && !f.profilePicture.includes("chs5mh6tnxh72cj0p4ej")
+        ? f.profilePicture
+        : `https://ui-avatars.com/api/?name=${encodeURIComponent(f.fullName || "Goswami Gaurav m.")}&background=047857&color=fff&size=200&bold=true`,
     location: {
       address: f.location?.address || "sardarnagar circle pase",
       city: f.location?.city || "Bhavnagar",

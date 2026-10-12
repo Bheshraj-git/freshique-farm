@@ -94,10 +94,12 @@ export default function FarmerHero({ farmer }: Props) {
               <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden shadow-2xl ring-8 ring-white/25 bg-amber-900/40">
                 <Image
                   src={
-                    farmer.profilePicture ||
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      farmer.fullName || "Farmer"
-                    )}&background=047857&color=fff&size=200&bold=true`
+                    farmer.profilePicture &&
+                    !farmer.profilePicture.includes("chs5mh6tnxh72cj0p4ej")
+                      ? farmer.profilePicture
+                      : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          farmer.fullName || "Farmer"
+                        )}&background=047857&color=fff&size=200&bold=true`
                   }
                   alt={farmer.fullName}
                   fill
