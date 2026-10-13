@@ -70,12 +70,10 @@
   }
 
   body {
-    background-image: linear-gradient(
-      135deg,
-      #f8fcf5 0%,
-      #f0f8f3 40%,
-      #e8f5ee 100%
-    );
+    background-image: linear-gradient(135deg,
+        #f8fcf5 0%,
+        #f0f8f3 40%,
+        #e8f5ee 100%);
     background-attachment: fixed;
   }
 
