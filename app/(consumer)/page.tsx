@@ -13,7 +13,6 @@ import { listProducts } from "@/lib/queries/products";
 import { getFavoritedProductIds } from "@/lib/queries/favorites";
 import { createClient } from "@/lib/supabase/server";
 
-// fixing consumer page to be server component, so that we can fetch data from supabase directly without using client component and avoid CORS issues
 
 const heroFeatures = [
   { label: "Verified Farmers" },
