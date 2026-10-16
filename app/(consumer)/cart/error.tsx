@@ -14,6 +14,7 @@ export default function CartError({
     console.error("Cart error:", error);
   }, [error]);
 
+  // add to cart button will throw an error if the cart is not loaded, so we need to reset the cart state when the error occurs
   return (
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <h1 className="text-2xl font-bold text-ink-900 mb-3">
