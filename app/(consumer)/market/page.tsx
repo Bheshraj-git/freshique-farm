@@ -11,6 +11,7 @@ export const metadata = {
   title: "Market — Freshique Farm",
 };
 
+// Read the current market filters from the URL.
 interface PageProps {
   searchParams: Promise<{
     q?: string;
@@ -24,9 +25,11 @@ interface PageProps {
 export default async function MarketPage({ searchParams }: PageProps) {
   const params = await searchParams;
 
+  // Ignore invalid price filters instead of passing NaN to the product query.
   const minNum = params.min ? Number(params.min) : undefined;
   const maxNum = params.max ? Number(params.max) : undefined;
 
+  // Load products and supporting filter/favorite data in parallel.
   const [{ products }, cities, categories, favoritedIds] = await Promise.all([
     listProducts({
       q: params.q,
@@ -43,6 +46,7 @@ export default async function MarketPage({ searchParams }: PageProps) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-20 sm:pt-24 md:pt-32 pb-24 md:pb-12">
+      {/* Show the appropriate filter layout for the current screen size. */}
       <div className="hidden lg:block mb-8">
         <MarketFilters cities={cities} categories={categories} />
       </div>
@@ -51,11 +55,13 @@ export default async function MarketPage({ searchParams }: PageProps) {
         <MarketFiltersMobile cities={cities} categories={categories} />
       </div>
 
+      {/* Render an empty state or the matching product cards. */}
       {products.length === 0 ? (
         <EmptyProducts />
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
           {products.map((p, idx) => (
+            // Stagger the card entrance animation, with a maximum delay.
             <FadeIn key={p.id} delay={Math.min(idx * 0.05, 0.4)} y={20}>
               <ProductCard
                 product={p}
