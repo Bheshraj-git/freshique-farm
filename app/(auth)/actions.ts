@@ -6,6 +6,9 @@ import { signInSchema, signUpSchema } from "@/lib/validations/auth";
 
 export interface ActionState {
   ok: boolean;
+  requiresOtp?: boolean;
+  email?: string;
+  role?: "consumer" | "farmer";
   error?: string;
   fieldErrors?: Record<string, string>;
 }
@@ -40,12 +43,19 @@ export async function signInAction(
   });
 
   if (error) {
+    let errorMessage =
+      error.message === "Invalid login credentials"
+        ? "Invalid email or password"
+        : error.message;
+
+    if (error.message.toLowerCase().includes("email not confirmed")) {
+      errorMessage =
+        "Your email has not been verified yet. Please check your inbox for the verification code or sign up again.";
+    }
+
     return {
       ok: false,
-      error:
-        error.message === "Invalid login credentials"
-          ? "Invalid email or password"
-          : error.message,
+      error: errorMessage,
     };
   }
 
@@ -54,7 +64,7 @@ export async function signInAction(
 }
 
 /**
- * Sign up — creates auth user, uploads avatar, returns success.
+ * Sign up — creates auth user, uploads avatar, returns OTP verification state.
  */
 export async function signUpAction(
   _prev: ActionState,
@@ -106,7 +116,7 @@ export async function signUpAction(
       ok: false,
       error:
         authError.message.includes("already registered") ||
-        authError.message.includes("already exists")
+          authError.message.includes("already exists")
           ? "An account with this email already exists"
           : authError.message,
     };
@@ -117,30 +127,143 @@ export async function signUpAction(
     return { ok: false, error: "Signup succeeded but no user was returned." };
   }
 
+  // Handle avatar upload if provided
   const file = formData.get("avatar") as File | null;
   if (file && file.size > 0) {
     const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
     const allowed = ["jpg", "jpeg", "png", "webp"];
     if (allowed.includes(ext) && file.size <= 2 * 1024 * 1024) {
-      const path = `${newUser.id}/avatar.${ext}`;
-      const { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(path, file, { upsert: true, contentType: file.type });
+      try {
+        const { createAdminClient } = await import("@/lib/supabase/admin");
+        const adminClient = createAdminClient();
+        const storageClient = adminClient || supabase;
 
-      if (!uploadError) {
-        const { data: urlData } = supabase.storage
+        const path = `${newUser.id}/avatar.${ext}`;
+        const { error: uploadError } = await storageClient.storage
           .from("avatars")
-          .getPublicUrl(path);
+          .upload(path, file, { upsert: true, contentType: file.type });
 
-        await supabase
-          .from("profiles")
-          .update({ avatar_url: urlData.publicUrl })
-          .eq("id", newUser.id);
+        if (!uploadError) {
+          const { data: urlData } = storageClient.storage
+            .from("avatars")
+            .getPublicUrl(path);
+
+          await storageClient
+            .from("profiles")
+            .update({ avatar_url: urlData.publicUrl })
+            .eq("id", newUser.id);
+        }
+      } catch {
+        // Non-blocking: failure to upload avatar does not cancel account creation
       }
     }
   }
 
+  // If a session was returned directly, email confirmation is disabled in Supabase
+  if (authData.session) {
+    revalidatePath("/", "layout");
+    return {
+      ok: true,
+      requiresOtp: false,
+      email: parsed.data.email,
+      role: parsed.data.role,
+    };
+  }
+
+  // Otherwise, user needs to verify the 6-digit OTP sent to their email
+  return {
+    ok: true,
+    requiresOtp: true,
+    email: parsed.data.email,
+    role: parsed.data.role,
+  };
+}
+
+/**
+ * Verifies the 6-digit email OTP with Supabase Auth.
+ */
+export async function verifyOtpAction(
+  email: string,
+  token: string
+): Promise<{ ok: boolean; error?: string; role?: "consumer" | "farmer" }> {
+  if (!email || !token) {
+    return { ok: false, error: "Email and verification code are required." };
+  }
+
+  const cleanEmail = email.trim().toLowerCase();
+  const cleanToken = token.trim();
+
+  const supabase = await createClient();
+
+
+  let { data, error } = await supabase.auth.verifyOtp({
+    email: cleanEmail,
+    token: cleanToken,
+    type: "signup",
+  });
+
+  if (error) {
+    const retry = await supabase.auth.verifyOtp({
+      email: cleanEmail,
+      token: cleanToken,
+      type: "email",
+    });
+    if (!retry.error) {
+      data = retry.data;
+      error = null;
+    }
+  }
+
+  if (error || !data?.user) {
+    return {
+      ok: false,
+      error:
+        error?.message ||
+        "Invalid or expired verification code. Please check and try again.",
+    };
+  }
+
+  const user = data.user;
+  let role: "consumer" | "farmer" =
+    (user.user_metadata?.role as "consumer" | "farmer") || "consumer";
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (profile?.role) {
+    role = profile.role as "consumer" | "farmer";
+  }
+
   revalidatePath("/", "layout");
+  return { ok: true, role };
+}
+
+/**
+ * Resends the 6-digit OTP code to the given email address.
+ */
+export async function resendOtpAction(
+  email: string
+): Promise<{ ok: boolean; error?: string }> {
+  if (!email) {
+    return { ok: false, error: "Email address is required." };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email: email.trim().toLowerCase(),
+  });
+
+  if (error) {
+    return {
+      ok: false,
+      error: error.message || "Failed to resend code. Please try again shortly.",
+    };
+  }
+
   return { ok: true };
 }
 

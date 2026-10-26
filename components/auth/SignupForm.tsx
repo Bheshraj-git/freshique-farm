@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   User as UserIcon,
@@ -17,20 +17,42 @@ import { signUpAction, type ActionState } from "@/app/(auth)/actions";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import AvatarUpload from "./AvatarUpload";
+import OtpVerification from "./OtpVerification";
 
 const initialState: ActionState = { ok: false };
 
 export default function SignupForm() {
   const [state, formAction, isPending] = useActionState(signUpAction, initialState);
+  const [showOtp, setShowOtp] = useState(false);
+  const [nextUrl, setNextUrl] = useState("/");
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const next = searchParams.get("next") || "/";
+    setNextUrl(next);
+
     if (state.ok) {
-      const searchParams = new URLSearchParams(window.location.search);
-      const next = searchParams.get("next") || "/";
-      window.location.href = next;
+      if (state.requiresOtp && state.email) {
+        setShowOtp(true);
+      } else {
+        // Immediate login if email confirmation is disabled
+        window.location.href = next;
+      }
     }
-  }, [state.ok]);
-  
+  }, [state.ok, state.requiresOtp, state.email]);
+
+  if (showOtp && state.email) {
+    return (
+      <div className="py-6">
+        <OtpVerification
+          email={state.email}
+          role={state.role}
+          onBackToSignup={() => setShowOtp(false)}
+          nextUrl={nextUrl}
+        />
+      </div>
+    );
+  }
 
   return (
     <form action={formAction} className="grid gap-6 lg:grid-cols-2">
