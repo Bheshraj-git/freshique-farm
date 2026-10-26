@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { signInSchema, signUpSchema } from "@/lib/validations/auth";
 
@@ -94,10 +95,23 @@ export async function signUpAction(
 
   const supabase = await createClient();
 
+  let emailRedirectTo: string | undefined;
+  try {
+    const headersList = await headers();
+    const host = headersList.get("x-forwarded-host") || headersList.get("host");
+    const proto = headersList.get("x-forwarded-proto") || "https";
+    if (host) {
+      emailRedirectTo = `${proto}://${host}/callback`;
+    }
+  } catch {
+    // fallback if headers() unavailable
+  }
+
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
+      emailRedirectTo,
       data: {
         role: parsed.data.role,
         full_name: parsed.data.full_name,
@@ -125,6 +139,16 @@ export async function signUpAction(
   const newUser = authData.user;
   if (!newUser) {
     return { ok: false, error: "Signup succeeded but no user was returned." };
+  }
+
+  // When Supabase email confirmation is enabled and the user is already registered,
+  // Supabase returns a user object with an empty identities array to prevent email enumeration,
+  // and will NOT send a verification email.
+  if (newUser.identities && newUser.identities.length === 0) {
+    return {
+      ok: false,
+      error: "An account with this email is already registered. Please log in instead.",
+    };
   }
 
   // Handle avatar upload if provided
