@@ -1,21 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import {
     Sprout,
     DollarSign,
     ShoppingBag,
     TrendingUp,
-    TrendingDown,
     Calendar,
     Award,
     Package,
     Users,
     CreditCard,
     Clock,
-    CheckCircle2,
-    Truck,
     Layers,
     ArrowUpRight,
     ArrowDownRight,
@@ -179,7 +175,7 @@ export default function FarmerAnalyticsDashboard({ data }: Props) {
 
                 {/* 1. Stat Cards Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3.5 sm:gap-4 mb-10">
-                    {statCards.map((card, idx) => (
+                    {statCards.map((card) => (
                         <motion.div
                             key={card.label}
                             variants={itemVariants}

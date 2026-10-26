@@ -1,4 +1,3 @@
-// components/icons/SocialIcons.tsx
 import type { SVGProps } from "react";
 
 export function InstagramIcon(props: SVGProps<SVGSVGElement>) {

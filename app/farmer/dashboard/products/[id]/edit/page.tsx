@@ -14,7 +14,7 @@ interface PageProps {
 
 export default async function EditProductPage({ params }: PageProps) {
     const { id } = await params;
-    const { user, profile } = await requireRole(
+    const { user } = await requireRole(
         "farmer",
         `/farmer/dashboard/products/${id}/edit`
     );

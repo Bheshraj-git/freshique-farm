@@ -13,14 +13,6 @@ export default function SellerCard({
   farmerName,
   farmerAvatar,
 }: Props) {
-  const initials =
-    farmerName
-      .split(" ")
-      .map((n) => n[0])
-      .slice(0, 2)
-      .join("")
-      .toUpperCase() || "F";
-
   return (
     <Link
       href={`/farmer/${farmerId}`}

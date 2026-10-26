@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Save } from "lucide-react";
 import {
@@ -47,9 +47,6 @@ export default function ProductForm({
                 updateProductAction(productId!, prev, fd);
 
     const [state, formAction, isPending] = useActionState(action, undefined);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(
-        initial?.image_url ?? null
-    );
 
     useEffect(() => {
         if (state?.ok) {
@@ -153,7 +150,7 @@ export default function ProductForm({
                     />
                 </div>
 
-                <ProductImageUpload initialUrl={previewUrl} />
+                <ProductImageUpload initialUrl={initial?.image_url ?? null} />
 
                 <label className="flex items-center gap-3 cursor-pointer">
                     <input

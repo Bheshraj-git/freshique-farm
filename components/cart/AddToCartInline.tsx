@@ -7,7 +7,7 @@ import { addToCartAction } from "@/app/(cart)/actions";
 import { useCartStore } from "@/lib/store/cart";
 import { useUser } from "@/lib/hooks/useUser";
 import { useToast } from "@/lib/toast";
-import { cn, formatINR } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface Props {
   productId: string;

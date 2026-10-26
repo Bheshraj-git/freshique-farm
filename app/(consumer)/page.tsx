@@ -275,7 +275,6 @@ export default async function Home() {
                   </div>
 
                   {/* Floating leaf icon */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/1135/1135528.png"
                     alt="leaf decoration"

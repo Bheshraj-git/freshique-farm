@@ -14,14 +14,6 @@ export default function FarmerHeroBanner({
     joinedLabel,
     productCount,
 }: Props) {
-    const initials =
-        fullName
-            .split(" ")
-            .map((n) => n[0])
-            .slice(0, 2)
-            .join("")
-            .toUpperCase() || "F";
-
     return (
         <section className="relative rounded-3xl overflow-hidden shadow-card bg-gradient-to-br from-sky-500/40 via-brand-500/50 to-brand-700/60 border border-white/40">
             {/* Decorative circles */}

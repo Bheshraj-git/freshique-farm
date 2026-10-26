@@ -2,15 +2,13 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { ShoppingBag, ImageOff } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { placeOrderAction, type PlaceOrderState } from "@/app/(orders)/actions";
 import type { CartLine } from "@/lib/queries/cart";
 import { useToast } from "@/lib/toast";
 import OrderSummaryCard from "./OrderSummaryCard";
 import DeliveryAddressCard from "./DeliveryAddressCard";
 import CheckoutItemRow from "./CheckoutItemRow";
-import { formatINR } from "@/lib/utils";
 
 const initialState: PlaceOrderState = { ok: false };
 

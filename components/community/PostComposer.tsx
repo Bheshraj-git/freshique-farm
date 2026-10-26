@@ -4,10 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Send, ImagePlus, X } from "lucide-react";
-import {
-    createPostAction,
-    type CommunityActionResult,
-} from "@/app/(consumer)/community/actions";
+import { createPostAction } from "@/app/(consumer)/community/actions";
 import { useUser } from "@/lib/hooks/useUser";
 import { useToast } from "@/lib/toast";
 import { cn } from "@/lib/utils";

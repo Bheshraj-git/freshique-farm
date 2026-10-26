@@ -13,14 +13,6 @@ export default function ProfileIdentityCard({
   email,
   avatarUrl,
 }: Props) {
-  const initials =
-    fullName
-      .split(" ")
-      .map((n) => n[0])
-      .slice(0, 2)
-      .join("")
-      .toUpperCase() || "U";
-
   return (
     <div className="rounded-2xl bg-white border border-brand-50 shadow-card overflow-hidden">
       {/* Green banner */}

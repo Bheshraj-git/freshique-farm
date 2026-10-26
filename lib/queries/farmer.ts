@@ -209,10 +209,6 @@ export async function getFarmerOrderDetail(
         .eq("id", (order as any).user_id)
         .maybeSingle();
 
-    const { data: authUser } = await supabase.auth.admin?.getUserById?.(
-        (order as any).user_id
-    ) ?? { data: null };
-
     return {
         id: order.id,
         status: order.status,
@@ -279,7 +275,7 @@ export async function getFarmerAnalytics(
 ): Promise<FarmerAnalyticsData> {
     const supabase = await createClient();
 
-    const { data: myItems, error } = await supabase
+    const { data: myItems } = await supabase
         .from("order_items")
         .select(
             `

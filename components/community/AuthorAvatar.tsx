@@ -13,16 +13,7 @@ export default function AuthorAvatar({
     size = "md",
     timestamp,
 }: Props) {
-    const initials =
-        author.full_name
-            .split(" ")
-            .map((n) => n[0])
-            .slice(0, 2)
-            .join("")
-            .toUpperCase() || "U";
-
     const dims = size === "sm" ? "h-8 w-8" : "h-10 w-10";
-    const text = size === "sm" ? "text-xs" : "text-sm";
     const nameText = size === "sm" ? "text-sm" : "text-base";
 
     return (

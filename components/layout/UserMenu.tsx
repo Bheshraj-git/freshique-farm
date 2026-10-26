@@ -39,14 +39,6 @@ export default function UserMenu() {
     );
   }
 
-  const initials =
-    profile?.full_name
-      ?.split(" ")
-      .map((n) => n[0])
-      .slice(0, 2)
-      .join("")
-      .toUpperCase() || "U";
-
   return (
     <div className="relative" ref={ref}>
       <button

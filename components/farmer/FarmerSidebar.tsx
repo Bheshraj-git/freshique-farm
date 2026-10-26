@@ -44,13 +44,6 @@ export default function FarmerSidebar({
     avatarUrl,
 }: Props) {
     const pathname = usePathname();
-    const initials =
-        fullName
-            .split(" ")
-            .map((n) => n[0])
-            .slice(0, 2)
-            .join("")
-            .toUpperCase() || "F";
 
     return (
         <aside className="hidden lg:flex flex-col w-72 shrink-0 bg-brand-800 text-white sticky top-0 h-screen">

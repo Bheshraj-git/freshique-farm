@@ -34,7 +34,6 @@ export default async function ProductPage({ params }: PageProps) {
     getFavoritedProductIds(),
   ]);
 
-  const outOfStock = product.stock <= 0;
   const isFavorited = favoritedIds.has(product.id);
 
   return (

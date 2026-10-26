@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Freshique Farm 🌾🚜
 
-## Getting Started
+**Freshique Farm** is a modern, full-stack farm-to-table web marketplace connecting consumers directly with local farmers. Built with Next.js 16 (App Router & Turbopack), React 19, Supabase, and Google Gemini AI, it eliminates middlemen to bring fresh, sustainably harvested farm produce straight to consumers while empowering farmers with real-time sales dashboards, inventory control, and an intelligent AI Plant Doctor.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+### 🛒 Consumer Experience
+- **Interactive Marketplace:** Browse and filter fresh farm produce by category, price range, in-stock status, and real-time search.
+- **Dynamic Shopping Cart & Instant Checkout:** Client-hydrated, optimistic cart management synced seamlessly with Supabase session data.
+- **Order Tracking:** Detailed order history with live status indicators (`pending`, `confirmed`, `processing`, `completed`, `cancelled`).
+- **Farmer Profiles:** Dedicated public farmer pages highlighting farm origin, customer favorites, sold counts, and farming stories.
+- **Favorites & Wishlist:** One-tap save for favorite produce items with instant visual feedback.
+- **Community Feed:** Discussion board where consumers and farmers share updates, farming practices, and photos.
+
+### 🚜 Farmer Experience
+- **Dedicated Farmer Dashboard:** Streamlined portal for inventory and operational management.
+- **Product Management:** Add, edit, upload photos, and toggle active status for farm products.
+- **Real-time Order Fulfillment:** Update order statuses directly from the farmer orders view.
+- **Analytics & Trends:** Visual sales charts, daily revenue metrics, payment method distributions, and top-selling product statistics.
+- **AI Plant Doctor:** Powered by Google Gemini AI to analyze leaf and crop photos, diagnose diseases, rate severity, and generate tailored organic remedies and preventative measures.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Framework:** [Next.js 16.3.5](https://nextjs.org/) (App Router, Turbopack, Server Actions)
+- **Frontend:** [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations & Icons:** [Framer Motion](https://www.framer.com/motion/), [Lucide React](https://lucide.dev/)
+- **Visualizations:** [Recharts](https://recharts.org/)
+- **Backend & Auth:** [Supabase](https://supabase.com/) (PostgreSQL, Row Level Security, Storage, SSR Auth)
+- **AI Diagnostics:** [Google Gemini API](https://ai.google.dev/) (Multimodal vision analysis)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- **Node.js** 20.x or higher
+- **npm** or **pnpm**
+- A [Supabase](https://supabase.com/) project
+- *(Optional)* [Google Gemini API Key](https://aistudio.google.com/) for the AI Plant Doctor feature
+
+### 2. Environment Setup
+Copy `.env.example` to `.env.local` and configure your credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Fill in the required values:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+GEMINI_API_KEY=your-gemini-api-key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Database & Storage Setup
+Ensure the SQL tables, policies, and storage bucket are initialized in your Supabase project (refer to `supabase/storage_setup.sql`).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Install Dependencies
+```bash
+npm install
+```
 
-## Learn More
+### 5. Run Development Server
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Visit [http://localhost:3000](http://localhost:3000) to view the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Production Build & Quality Checks
 
-## Deploy on Vercel
+Run the production build:
+```bash
+npm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run code formatting and lint verification:
+```bash
+npm run lint
+```

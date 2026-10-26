@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Package, KeyRound, LogOut, ChevronRight } from "lucide-react";
+import { Package, KeyRound, ChevronRight } from "lucide-react";
 
 const items = [
   {

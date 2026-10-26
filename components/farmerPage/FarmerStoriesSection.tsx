@@ -180,7 +180,6 @@ export default function FarmerStoriesSection({ blogs }: Props) {
           >
             {/* Modal Header Image */}
             <div className="relative aspect-video w-full bg-slate-800">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={getValidImageUrl(selectedBlog.image, selectedBlog.title)}
                 alt={selectedBlog.title}

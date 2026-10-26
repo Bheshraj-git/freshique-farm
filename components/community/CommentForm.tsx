@@ -3,12 +3,8 @@
 import { useActionState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Send } from "lucide-react";
-import {
-    createCommentAction,
-    type CommunityActionResult,
-} from "@/app/(consumer)/community/actions";
+import { createCommentAction } from "@/app/(consumer)/community/actions";
 import { useUser } from "@/lib/hooks/useUser";
-import { useToast } from "@/lib/toast";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -18,7 +14,6 @@ interface Props {
 export default function CommentForm({ postId }: Props) {
     const router = useRouter();
     const { user } = useUser();
-    const { push } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
 
     const [state, formAction, isPending] = useActionState(

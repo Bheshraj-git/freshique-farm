@@ -23,7 +23,7 @@ export default function CartItemRow({ line }: Props) {
   const { push } = useToast();
   const updateOpt = useCartStore((s) => s.updateQuantityOptimistic);
   const removeOpt = useCartStore((s) => s.removeOptimistic);
-  const [pending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [busy, setBusy] = useState(false);
 
   const atMax = line.quantity >= line.product.stock;

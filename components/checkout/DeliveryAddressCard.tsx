@@ -24,10 +24,6 @@ export default function DeliveryAddressCard({
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(initialAddress);
 
-  const fullAddress = [value, city, state, zipCode, country]
-    .filter(Boolean)
-    .join(", ");
-
   function handleSave() {
     onAddressChange(value);
     setEditing(false);

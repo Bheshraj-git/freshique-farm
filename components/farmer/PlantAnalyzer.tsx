@@ -264,7 +264,7 @@ export default function PlantAnalyzer() {
                         AI Plant Doctor
                     </h1>
                     <p className="text-sm text-ink-500 mt-1 max-w-lg">
-                        Upload a clear image of your plant's leaf or crop for expert AI
+                        Upload a clear image of your plant&apos;s leaf or crop for expert AI
                         analysis and practical advice in seconds.
                     </p>
                 </div>

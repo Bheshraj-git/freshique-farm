@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { ImagePlus, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const MAX_SIZE = 2 * 1024 * 1024; // 2 MB
 const ALLOWED = ["image/jpeg", "image/png", "image/webp"];

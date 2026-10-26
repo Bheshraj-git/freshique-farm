@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, ImageOff, Package } from "lucide-react";
+import { ChevronRight, ImageOff } from "lucide-react";
 import OrderStatusBadge from "./OrderStatusBadge";
 import { formatINR } from "@/lib/utils";
 import type { OrderListItem } from "@/lib/queries/orders";
